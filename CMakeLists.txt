@@ -3,4 +3,4 @@ project(Lab4_3sem)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Lab4_3sem main.cpp Armament.cpp Armament.h Ship.cpp Ship.h Table.cpp Table.h)
+add_executable(Lab4_3sem main.cpp Armament.cpp Armament.h Ship.cpp Ship.h Table.cpp Table.h Mission.cpp Mission.h)
