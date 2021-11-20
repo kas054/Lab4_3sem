@@ -1,5 +1,5 @@
 //
-// Created by PC on 15.11.2021.
+// Created by PC on 08.11.2021.
 //
 
 #ifndef LAB4_3SEM_TABLE_H
@@ -19,9 +19,9 @@ namespace Menu {
         static const int QUOTA = 10;
         int max_size; // максимальный размер вектора
         int current_size;
-        Table_element <Ship::Ship> **ships;
+        Table_element <Ships::Ship> **ships;
     public:
-        Table(): current_size(0), ships(new Table_element <Ship::Ship> *[QUOTA]), max_size(QUOTA) {};
+        Table(): current_size(0), ships(new Table_element <Ships::Ship> *[QUOTA]), max_size(QUOTA) {};
         Table(int size, S *array_of_new_ships, std::string *names, Basic::Coordinate *places);
 
         Table(const Table &); // копирующий конструктор
@@ -33,7 +33,7 @@ namespace Menu {
         int get_count() const { return current_size; };
         void del_ship(int i);
         void add_ship(S new_ship, Basic::Coordinate coordinates);
-        Ship::Ship &description_ship(std::string name) const;
+        Ships::Ship &description_ship(std::string name) const;
     };
 
     template <class S>
@@ -44,8 +44,8 @@ namespace Menu {
         int current_size;
 
         Basic::Capitan commander;
-        Table <Ship::Ship>  &convoy;
-        Table <Ship::Ship>  &pirates;
+        Table <Ships::Ship>  &convoy;
+        Table <Ships::Ship>  &pirates;
         /* max_money, spend_money, full_cargo, min_cargo, lost_cargo,
            delivered_cargo, max_count_ship_c, max_count_ship_p, size A, size B */
         int properties[10] = {0};
@@ -69,7 +69,7 @@ namespace Menu {
         void set_coord_A_B(int i, int x, int y);
 
         void change_ship(int c_p, int table_index, int ship_property_index); //c_p == 0: конвой, c_p == 1: пираты
-        Ship::Ship &get_ship(int c_p, int table_index) const;
+        Ships::Ship &get_ship(int c_p, int table_index) const;
 
         void buy_ship(std::string ship_type);
         void sell_ship(int c_p, int table_index);
@@ -81,7 +81,7 @@ namespace Menu {
         void buy_armament(int c_p, int table_index, int i, int property, int new_value, std::string type = "");
         void sell_armament(int c_p, int table_index, int i);
 
-        Ship::Ship &create_pirate();
+        Ships::Ship &create_pirate();
     };
 
 

@@ -1,5 +1,5 @@
 //
-// Created by PC on 15.11.2021.
+// Created by PC on 06.11.2021.
 //
 
 #ifndef LAB4_3SEM_ARMAMENT_H

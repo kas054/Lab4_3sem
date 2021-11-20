@@ -1,5 +1,5 @@
 //
-// Created by PC on 15.11.2021.
+// Created by PC on 08.11.2021.
 //
 
 #ifndef LAB4_3SEM_SHIP_H
@@ -37,6 +37,9 @@ namespace Ships {
         void set_velocity(double velocity);
 
         void get_damage(double damage) {properties[3] -= damage;} //properties[3] - current life
+
+        void print_properties() const;
+
     };
 
     class Transport_ship: public virtual Ship {
@@ -59,28 +62,44 @@ namespace Ships {
         void set_cur_speed(double new_speed);
 
         void set_cur_cargo(double add_cargo) {if (add_cargo <= cargo[0] - cargo[1]) cargo[1] += add_cargo;}
+
+       friend std::ostream &operator<<(std::ostream &s, const Transport_ship &ship);
     };
 
     class Security_ship: public virtual Ship {
     private:
-        Basic::Armament *armaments[4] = {nullptr}; // Расположение орудий: корма, нос, правый борт, левый борт
+        Basic::Armament *armaments[4] = {nullptr}; // Расположение орудий: корма - 0, нос - 1, правый борт - 2, левый борт - 3
     public:
         Security_ship() {}
 
         Security_ship(std::string new_type, std::string name,double max_velocity, double max_life, double cost): Ship(new_type,name,max_velocity, max_life, cost) {}
 
-        void add_armament(Basic::Armament &new_armament, int place){
-            if (armaments[place] == nullptr) armaments[place] = &new_armament;
-        }
+        void add_armament(Basic::Armament &new_armament, int place);
 
         void change_armament(int i, int property, double new_value, std::string type = ""); // номер оружия, свойство оружия, новое значение, тип оружия
 
-        Basic::Armament get_info_armament(int i) const;
+        Basic::Armament *get_info_armament(int i) const;
+
         void change_place(int old_place, int new_place);
-        void shoot(Basic::Coordinate coordinate);
+
+        double shoot(Basic::Coordinate cur_coord, Basic::Coordinate pirate); // return total damage
+
+        friend std::ostream &operator<<(std::ostream &s, const Security_ship &ship);
+
+        void change_status();
+
+        void armament_exchange(int first, int second);
     };
 
-    class Military_transport_ship: public Security_ship, public Transport_ship {};
+    class Military_transport_ship: public Security_ship, public Transport_ship {
+    public:
+        Military_transport_ship() {}
+        Military_transport_ship(std::string new_type, std::string name, double max_velocity,
+                                 double max_life, double cost, double max_cargo, double coef_decrease);
+
+        friend std::ostream &operator<<(std::ostream &s, const Military_transport_ship &ship);
+
+    };
 }
 
 #endif //LAB4_3SEM_SHIP_H
