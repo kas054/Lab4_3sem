@@ -28,7 +28,7 @@ namespace Ships {
 
         std::string get_name() const { return name; }
 
-        void change_property(int i, int new_value)  { if (i < properties_count - 1 && i > 0) properties[i] = new_value; }
+        void change_property(int i, int new_value)  { if (i < properties_count  && i > 0) properties[i] = new_value; }
 
         void change_type(std::string new_type) { ship_type = std::move(new_type); }
 

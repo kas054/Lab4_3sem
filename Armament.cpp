@@ -24,20 +24,26 @@ namespace Basic {
         return s;
     }
 
-    Armament::Armament(std::string new_type,double damage, double speed, double range, double max_ammunition, double cost, double fire_rate){
+    Armament::Armament(std::string new_type,double damage, double speed, double range, double max_ammunition, double cost){
         type = std::move(new_type);
         properties[0] = damage;
         properties[1] = speed;
         properties[2] = range;
         properties[3] = max_ammunition;
+        properties[4] = max_ammunition;
         properties[5] = cost;
-        properties[7] = fire_rate;
     }
 
     double Armament::get_property(int i) const{
         double answer = 0;
-        if (i < properties_count - 1) answer = properties[i];
+        if (i < properties_count) answer = properties[i];
         return answer;
+    }
+
+    void Armament::change_status() { // с каждым шагом статус стрельбы уменьшается на скорострельность
+        if (properties[6] > 0)
+            properties[6] -= properties[1];
+        if (properties[6] < 0) properties[6] = 0;
     }
 
     double Armament::shoot(){
@@ -49,7 +55,6 @@ namespace Basic {
         }
         return answer;
     }
-
 
     std::istream & operator >> (std::istream &in, Armament &armament)
     {
@@ -68,5 +73,4 @@ namespace Basic {
         s << "(" << coordinate.x << ", " << coordinate.y << ")\n";
         return s;
     }
-
 }

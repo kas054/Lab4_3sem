@@ -117,7 +117,7 @@ namespace Ships{
 
     void Security_ship::change_status(){
         for (int i = 0; i < 4; i ++)
-            if (armaments[i] != nullptr) change_status();
+            if (armaments[i] != nullptr) armaments[i]->change_status();
     }
 
     std::ostream &operator<<(std::ostream &s, const Transport_ship &ship){
