@@ -10,17 +10,22 @@
 namespace Ships {
     class Ship {
     private:
-        std::string ship_type = "";
-        std::string name = "";
-        struct Basic::Capitan capitan = {"", ""};
+        std::string ship_type;
+        std::string name;
+        Basic::Capitan capitan;
         static const int properties_count = 5;
         double properties[properties_count] = {0}; // max_velocity - 0, cur_velocity - 1, max_life - 2, cur_life - 3, cost - 4
+
     public:
-        Ship() {};
+        Ship(): ship_type(""), name("") {};
         Ship(std::string new_type, std::string name,
              double max_velocity, double max_life, double cost);
+        // деструктор
+        virtual ~Ship() {};
 
         double get_property(int i) const;
+
+        const Basic::Capitan get_capitan() const {return capitan;}
 
         int count_properties() const { return properties_count; }
 
@@ -40,6 +45,7 @@ namespace Ships {
 
         void print_properties() const;
 
+        friend std::ostream &operator<<(std::ostream &, const Ship &);
     };
 
     class Transport_ship: public virtual Ship {
@@ -57,13 +63,15 @@ namespace Ships {
 
         double get_info_cargo(int i) const;
 
+        int get_size() {return size;}
+
         double possible_speed();
 
         void set_cur_speed(double new_speed);
 
         void set_cur_cargo(double add_cargo) {if (add_cargo <= cargo[0] - cargo[1]) cargo[1] += add_cargo;}
 
-       friend std::ostream &operator<<(std::ostream &s, const Transport_ship &ship);
+        friend std::ostream &operator<<(std::ostream &s, const Transport_ship &ship);
     };
 
     class Security_ship: public virtual Ship {
@@ -94,6 +102,7 @@ namespace Ships {
     class Military_transport_ship: public Security_ship, public Transport_ship {
     public:
         Military_transport_ship() {}
+        ~Military_transport_ship() {}
         Military_transport_ship(std::string new_type, std::string name, double max_velocity,
                                  double max_life, double cost, double max_cargo, double coef_decrease);
 

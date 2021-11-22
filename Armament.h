@@ -45,6 +45,8 @@ namespace Basic {
     struct Capitan{
         std::string name;
         std::string rank;
+        Capitan(): name(""), rank("") {}
+        Capitan(std::string n_name, std::string n_rank): name(n_name), rank(n_rank) {}
     };
 
     std::ostream &operator<<(std::ostream &, const Capitan &);

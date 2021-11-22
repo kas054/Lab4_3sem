@@ -29,13 +29,19 @@ namespace Ships{
     }
 
     void Ship::print_properties() const{
+        std::cout << "\t\t Name of ship: " << get_name() << "\n";
         std::cout << "\t\t Type of ship: " << get_type() << "\n";
         std::cout << "\t\t Capitan: " << capitan << "\n";
         std::cout <<"\t\t max velocity \t current velocity \t max life \t current life \t cost \n\t\t ";
-        for (int i = 0; i < 5; i ++){
+        for (int i = 0; i < count_properties(); i ++){
             std::cout << properties[i] <<" \t ";
         }
         std::cout<<std::endl;
+    }
+
+    std::ostream &operator<<(std::ostream &s, const Ships::Ship &ship){
+        ship.print_properties();
+        return s;
     }
 
     Transport_ship::Transport_ship( std::string new_type, std::string name, double max_velocity,

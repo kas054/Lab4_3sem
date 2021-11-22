@@ -11,7 +11,7 @@ namespace Basic {
         //std::getline(std::cin, myName);
         s << "Type of armament: " << vec.type << "\n";
         s << "damage\t" << "speed\t" << "range\t" << "max ammunition\t" << "cur_ammunition\t" << "cost\n \t";
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < vec.count_properties(); i++) {
             s << (vec.properties)[i] << "\t\t";
          }
         s << std::endl;
@@ -19,6 +19,7 @@ namespace Basic {
     }
 
     std::ostream &operator<<(std::ostream &s, const Capitan &capitan){
+        s << "Capitan: \n";
         s << "Name: " << capitan.name << "\t";
         s << "Rank: " << capitan.rank << "\n";
         return s;
