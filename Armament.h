@@ -14,6 +14,7 @@ namespace Basic {
         double properties[properties_count] = {0}; //damage - 0,  rate of fire - 1, range - 2, max_ammunition - 3, cur_ammunition - 4, cost - 5, status - 6
     public:
         Armament() {};
+        ~Armament(){};
         Armament(std::string new_type,double damage, double fire_rate,
                  double range, double max_ammunition, double cost);
 

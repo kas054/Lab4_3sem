@@ -7,7 +7,8 @@
 #include "Ship.h"
 namespace Table {
 
-    struct Info{
+    class Info{
+    public:
         Ships::Ship *ship;
         Basic::Coordinate cur_place;
 
@@ -15,15 +16,22 @@ namespace Table {
         Info(Ships::Ship *s, Basic::Coordinate p): ship(s), cur_place(p) {}
         Info(const Info &inf);
 
+        Info &operator=(const Info &);
+
+        Info &operator=(Info &&);
+
         ~Info() {delete ship;}
 
-        void print(){ std::cout << *ship << "\n" << cur_place <<std::endl;}
+        friend std::ostream & operator <<(std::ostream &s, const Info &inf) {
+            std::cout << inf.ship << "\n" << inf.cur_place <<std::endl;
+            return s;
+        }
     };
 
     template <class IND, class INF>
     struct Table_element{
         IND index; // std::string
-        INF info; // struct Info
+        INF info; // class Info
         Table_element(): index(""), info(INF()) {}
         Table_element(const IND &name, const INF &inf): index(name), info(inf) {}
     };
@@ -66,29 +74,29 @@ namespace Table {
         Table<IND, INF> &operator =(const Table<IND, INF> &);
         Table<IND, INF> &operator =(Table<IND, INF> &&);
         // операторы индексирования
-        INF &operator[](const IND &); // l-value
+        INF &operator[](IND &); // l-value
         const INF &operator[](const IND &) const; // r -value
         // вывод
-        friend std::ostream & operator <<(std::ostream &, const Table<IND, INF> &);
+        template <class Id, class If>
+        friend std::ostream & operator <<(std::ostream &, const Table<Id,If> &);
         // объявления для итератора
         typedef Iterator<IND, INF> Iterator;
         // методы итератора
-        Iterator begin();
-        Iterator end();
+        Iterator begin() const;
+        Iterator end() const;
         Iterator find(const IND &) const;
         // методы таблицы
         int get_count() const { return current_size; };
-        void del_ship(int i);
+        void del_ship(const std::string &);
         void add_ship(Ships::Ship *new_ship, Basic::Coordinate coordinates);
-        Ships::Ship &description_ship(std::string name) const;
+        Ships::Ship *description_ship(const std::string  &);
 
     };
-    /*Table <Ships::Ship> a;
-
-    Ships::Transport_ship *transport = new Ships::Transport_ship();
-
-    Ships::Ship ship = *transport;
-    Ships::Transport_ship *tmp = dynamic_cast<Ships::Transport_ship *>(&ship); */
+     /*
+       Table <std::string, struct Info> a;
+       Ships::Transport_ship *transport = new Ships::Transport_ship();
+       Ships::Ship ship = *transport;
+       Ships::Transport_ship *tmp = dynamic_cast<Ships::Transport_ship *>(&ship); */
 
 
 }

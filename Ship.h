@@ -33,15 +33,17 @@ namespace Ships {
 
         std::string get_name() const { return name; }
 
-        void change_property(int i, int new_value)  { if (i < properties_count  && i > 0) properties[i] = new_value; }
+        void change_property(int i, int new_value)  { if (i < properties_count  && i >= 0) properties[i] = new_value; }
 
         void change_type(std::string new_type) { ship_type = std::move(new_type); }
+
+        void change_cap(Basic::Capitan new_cap) {capitan = new_cap;}
 
         void change_name(std::string new_name) { name = std::move(new_name); }
 
         void set_velocity(double velocity);
 
-        void get_damage(double damage) {properties[3] -= damage;} //properties[3] - current life
+        double get_damage(double damage) {properties[3] -= damage; return properties[3];} //properties[3] - current life
 
         void print_properties() const;
 
@@ -79,10 +81,13 @@ namespace Ships {
         Basic::Armament *armaments[4] = {nullptr}; // Расположение орудий: корма - 0, нос - 1, правый борт - 2, левый борт - 3
     public:
         Security_ship() {}
+        ~Security_ship();
 
         Security_ship(std::string new_type, std::string name,double max_velocity, double max_life, double cost): Ship(new_type,name,max_velocity, max_life, cost) {}
 
-        void add_armament(Basic::Armament &new_armament, int place);
+        void add_armament(Basic::Armament *new_armament, int place);
+
+        void remove_armament(int place);
 
         void change_armament(int i, int property, double new_value, std::string type = ""); // номер оружия, свойство оружия, новое значение, тип оружия
 

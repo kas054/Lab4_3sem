@@ -11,6 +11,18 @@ namespace Table {
         cur_place.y = (inf.cur_place).y;
     }
 
+    Info & Info::operator = (const Info &st){
+        if (this != &st){
+            ship = st.ship;
+        }
+        return *this;
+    }
+
+    Info & Info::operator =(Info &&st){
+        ship = st.ship;
+        return *this;
+    }
+
     // копирующий конструктор Table<IND, INF>
     template <class IND, class INF>
     Table<IND, INF>::Table(const Table<IND, INF> &vector2) : current_size(vector2.current_size), max_size(vector2.max_size)
@@ -66,7 +78,7 @@ namespace Table {
 
     // метод [] (l-value)
     template <class IND, class INF>
-    INF & Table<IND, INF>::operator[ ](const IND &s){
+    INF & Table<IND, INF>::operator[](IND &s){
         const char *error = "No such element";
         int i = get_pos(s);
         if (i < 0) throw error;
@@ -75,21 +87,68 @@ namespace Table {
 
     // метод [] (r-value)
     template <class IND, class INF>
-    const INF & Table<IND, INF>::operator[ ](const IND &s) const{
-        int i = getPos(s);
+    const INF & Table<IND, INF>::operator[](const IND &s) const{
+        int i = get_pos(s);
         if (i < 0)
             throw "No such element";
         return elements[i].info;
     }
 
+    // вывод Table<std::string string, Info>?
+    std::ostream & operator <<(std::ostream &s, const Table<std::string, Info> &tab){
+        Table<std::string, Info>::Iterator it;
+        for (it = tab.begin();it != tab.end(); ++it)
+            s << (*it).index << " - " << it->info << "\n";
+        return s;
+    }
+
+    // удаление корабля
+    template <>
+    void Table<std::string, struct Info>::del_ship(const std::string &name) {
+        //Table<std::string, struct Info>::Iterator it;
+        int i = get_pos(name);
+        if (i < 0) throw "No such element";
+        else{
+            delete &(elements[i]);
+            elements[i] = elements[current_size-1];
+            current_size -=1;
+        }
+    }
+
+    // получение описателя корабля по имени
+    template <>
+    Ships::Ship *Table<std::string, struct Info>::description_ship(const std::string &name) {
+        struct Info get_info = (*this)[name];
+        return get_info.ship;
+    }
+
+    //добавить корабль
+    template <>
+    void Table<std::string, struct Info>::add_ship(Ships::Ship *new_ship, Basic::Coordinate coordinates){
+        typedef Table_element<std::string, struct Info>  Tab_elem;
+
+        Info new_info= {new_ship, coordinates}; //
+        Tab_elem new_elem = {new_ship->get_name(), new_info};//
+
+        if (current_size == max_size) {
+            max_size += QUOTA;
+            Tab_elem *old = elements;
+            elements = new Tab_elem [max_size];
+            for (int i = 0; i < current_size; i ++) elements[i] = old[i];
+            delete [] old;
+        }
+        elements[current_size] = new_elem;
+        current_size += 1;
+    }
+
     // методы итератора
     template <class IND, class INF>
-    Iterator<IND, INF> Table<IND, INF>::begin( ) {
+    Iterator<IND, INF> Table<IND, INF>::begin( ) const {
         return Iterator(this->elements);
     }
 
     template <class IND, class INF>
-    Iterator<IND, INF> Table<IND, INF>::end( ){
+    Iterator<IND, INF> Table<IND, INF>::end( ) const{
         return Iterator(this->elements + current_size);
     }
 
@@ -98,104 +157,42 @@ namespace Table {
         int i = getPos(s);
         if(i < 0)
             i = current_size;
-        return Iterator(this->arr + i);
+        return Iterator(this->elements + i);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /* methods for Iterator
-    template <class S>
-    int Iterator<S>::operator !=(const Iterator<S> &it) const{
+    //methods for Iterator
+    template <class IND, class INF>
+    int Iterator<IND, INF>::operator !=(const Iterator<IND, INF> &it) const{
         return cur != it.cur;
     }
 
-    template <class S>
-    int Iterator<S>::operator ==(const Iterator<S> &it) const{
+    template <class IND, class INF>
+    int Iterator<IND, INF>::operator ==(const Iterator<IND, INF> &it) const{
         return cur == it.cur;
     }
 
-    template <class S>
-    Table_element<S> & Iterator<S>::operator *( ){
+    template <class IND, class INF>
+    Table_element<IND, INF> & Iterator<IND, INF>::operator *( ){
         return *cur;
     }
 
-    template <class S>
-    Table_element<S>* Iterator<S>::operator ->( ){
+    template <class IND, class INF>
+    Table_element<IND, INF>* Iterator<IND, INF>::operator ->( ){
         return cur;
     }
 
-    template <class S>
-    Iterator<S> & Iterator<S>::operator ++( ){
+    template <class IND, class INF>
+    Iterator<IND, INF> & Iterator<IND, INF>::operator ++( ){
         ++cur;
         return *this;
     }
 
-    template <class S>
-    Iterator<S> Iterator<S>::operator ++(int)
+    template <class IND, class INF>
+    Iterator<IND, INF> Iterator<IND, INF>::operator ++(int)
    {
-        Iterator<S> res(*this);
+        Iterator<IND, INF> result(*this);
         ++cur;
-        return res;
-    } */
+        return result;
+    }
 
-    //methods for Table
-    /*template <class S>
-    S & Table<S>::operator[](const std::string &s){
-        int i = getPos(s);
-        if (i < 0){
-            i = cur;
-            if (cur >= cnt){
-                Pair<IND, INF> *old = arr;
-                arr = new Pair<IND, INF>[cnt += QUOTA];
-                for (i = 0; i < cur; ++i)
-                    arr[i] = old[i];
-                delete[] old;
-            }
-            arr[cur].first = s;
-            ++cur;
-        }
-        return arr[i].second;
-    } */
-
-
-
-
-    /*template <>
-    Table<Ships::Ship>::~Table(){
-        for (int i = 0; i , current_size; i ++){
-            delete
-        }
-    }*/
-
-
-
-    /*template <class T, class S>
-    Table<T,S>::Table(Table<T, S> &&tab2) : current_size(tab2.current_size), max_size(tab2.max_size) {
-        vector = new T [current_size];
-        for (int i = 0; i < current_size; i++)
-            vector[i] = vector2.vector[i];
-
-   } */
 }
