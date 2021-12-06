@@ -4,14 +4,16 @@
 
 #include "Mission.h"
 using namespace Basic;
-namespace Menu{
 
-    Basic::Coordinate *Mission::get_coord_A_B(int i) const {
-        Basic::Coordinate answer;
-        if (i == 0) answer =  coordinates_A;
-        else if (i == 1) answer = coordinates_B;
+namespace Menu{
+    using namespace Pattern;
+
+    const Basic::Coordinate *Mission::get_coord_A_B(int i) const {
+        const Basic::Coordinate *answer;
+        if (i == 0) answer =  &coordinates_A;
+        else if (i == 1) answer = &coordinates_B;
         else throw "No such base";
-        return &answer;
+        return answer;
     }
 
     void Mission::set_coord_A_B(int i, int x, int y){
@@ -60,15 +62,21 @@ namespace Menu{
         cur_ship->change_type(new_type);
     }
 
-    void Mission::change_ship_cap(int c_p, std::string name, Basic::Capitan new_cap){
+    void Mission::change_ship_cap(int c_p, std::string name, std::string name_cap){
         Ships::Ship *cur_ship;
+        std::vector <Basic::Capitan> :: const_iterator vec_it;
         switch(c_p) {
             case 0:
                 cur_ship = convoy->description_ship(name);
             case 1:
                 cur_ship = pirates->description_ship(name);
         }
-        cur_ship->change_cap(new_cap);
+        for (vec_it = (config->capitan).cbegin(); vec_it != config->capitan.cend(); ++vec_it){
+            if (vec_it->name == name_cap) {
+                cur_ship->change_cap(*vec_it);
+                break;
+            }
+        }
     }
 
     Ships::Ship *Mission::get_ship(int c_p, std::string name) const{

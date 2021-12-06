@@ -8,8 +8,8 @@
 #include <vector>
 #include <map>
 namespace Menu {
-    using Table::Info;
-    using Table::Table;
+    using Pattern::Info;
+    using Pattern::Table;
     class Mission {
         friend class Basic_config;
     private:
@@ -29,11 +29,11 @@ namespace Menu {
 
         float p_count() const {return sizeof(properties) / sizeof(int);}
 
-        double get_properties(int i) const { if (i < p_count()  && i >= 0) return properties[i]; } // i - номер характеристики
+        double get_properties(int i) const { if (i < p_count()  && i >= 0) return properties[i]; else return 0;} // i - номер характеристики
 
         void set_properties(int i, int new_value) { if (i < p_count()  && i >= 0) properties[i] = new_value; }
 
-        Basic::Coordinate *get_coord_A_B(int i) const; // i == 0: A, i == 1: B
+       const Basic::Coordinate *get_coord_A_B(int i) const; // i == 0: A, i == 1: B
 
         void set_coord_A_B(int i, int x, int y);
 
@@ -43,7 +43,7 @@ namespace Menu {
 
         void change_ship_type(int c_p, std::string name, std::string new_type);
 
-        void change_ship_cap(int c_p, std::string name, Basic::Capitan new_cap);
+        void change_ship_cap(int c_p, std::string name, std::string name_cap);
 
         Ships::Ship *get_ship(int c_p, std::string name) const;
 

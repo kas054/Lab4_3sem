@@ -3,9 +3,10 @@
 //
 
 #include "Table.h"
-namespace Table {
 
-    Info::Info(const Info &inf) {
+namespace Pattern {
+
+    /*Info::Info(const Info &inf) {
         ship = inf.ship;
         cur_place.x = (inf.cur_place).x;
         cur_place.y = (inf.cur_place).y;
@@ -24,6 +25,7 @@ namespace Table {
     }
 
     // копирующий конструктор Table<IND, INF>
+
     template <class IND, class INF>
     Table<IND, INF>::Table(const Table<IND, INF> &vector2) : current_size(vector2.current_size), max_size(vector2.max_size)
     {
@@ -121,7 +123,7 @@ namespace Table {
         struct Info get_info = (*this)[name];
         return get_info.ship;
     }
-
+/*
     //добавить корабль
     template <>
     void Table<std::string, struct Info>::add_ship(Ships::Ship *new_ship, Basic::Coordinate coordinates){
@@ -152,26 +154,26 @@ namespace Table {
         return Iterator(this->elements + current_size);
     }
 
-    template <class IND, class INF>
-    Iterator<IND, INF> Table<IND, INF>::find(const IND &s) const{
-        int i = getPos(s);
-        if(i < 0)
-            i = current_size;
-        return Iterator(this->elements + i);
-    }
+     template <class IND, class INF>
+     Iterator<IND, INF> Table<IND, INF>::find(const IND &s) const{
+         int i = get_pos(s);
+         if(i < 0)
+             i = current_size;
+         return Iterator(this->elements + i);
+     }
 
-    //methods for Iterator
-    template <class IND, class INF>
-    int Iterator<IND, INF>::operator !=(const Iterator<IND, INF> &it) const{
-        return cur != it.cur;
-    }
+     //methods for Iterator
+     template <class IND, class INF>
+     int Iterator<IND, INF>::operator !=(const Iterator<IND, INF> &it) const{
+         return cur != it.cur;
+     } */
 
-    template <class IND, class INF>
+    /*template <class IND, class INF>
     int Iterator<IND, INF>::operator ==(const Iterator<IND, INF> &it) const{
         return cur == it.cur;
-    }
+    }*/
 
-    template <class IND, class INF>
+   /* template <class IND, class INF>
     Table_element<IND, INF> & Iterator<IND, INF>::operator *( ){
         return *cur;
     }
@@ -193,6 +195,5 @@ namespace Table {
         Iterator<IND, INF> result(*this);
         ++cur;
         return result;
-    }
-
+    }*/
 }
