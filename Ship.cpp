@@ -9,37 +9,44 @@ namespace Ships{
     Ship::Ship(std::string new_type, std::string name, double max_velocity, double max_life, double cost) {
         ship_type = std::move(new_type);
         this->name = std::move(name);
-        properties[0] = max_velocity;
+        prop["max velocity"] = max_velocity;
+        prop["max life"] = max_life;
+        prop["cost"] = cost;
+        /*properties[0] = max_velocity;
         properties[2] = max_life;
-        properties[4] = cost;
+        properties[4] = cost; */
     }
 
     void Ship::set_velocity(double velocity){
-        if (velocity > this->get_property(0)) velocity = get_property(0); // properties[0] - max velocity
+        double m_velocity = prop["max velocity"];
+        if (velocity > m_velocity) velocity = m_velocity;
         else if (velocity < 0) velocity = 0;
-        this->properties[1] = velocity; // properties[1] - current velocity
+        prop["cur velocity"] = velocity;
     }
 
-    double Ship::get_property(int i) const {
+    double Ship::get_property(std::string i) const {
         double answer;
-        if (0 > i || i > count_properties() - 1) answer = 0;
-        else answer = properties[i];
+        std::map<std::string, double> :: const_iterator it = prop.find(i);
+        if (it == prop.end()) answer = 0;
+        else answer = it->second;
         return answer;
     }
 
-    void Ship::print_properties() const{
-        std::cout << "\t\t Name of ship: " << get_name() << "\n";
-        std::cout << "\t\t Type of ship: " << get_type() << "\n";
-        std::cout << "\t\t Capitan: " << capitan << "\n";
-        std::cout <<"\t\t max velocity \t current velocity \t max life \t current life \t cost \n\t\t ";
-        for (int i = 0; i < count_properties(); i ++){
-            std::cout << properties[i] <<" \t ";
-        }
-        std::cout<<std::endl;
+    double Ship::get_damage(double damage){
+        double c_life = get_property("cur life") - damage;
+        change_property("cur life", c_life);
+        return get_property("cur life");
     }
 
     std::ostream &operator<<(std::ostream &s, const Ships::Ship &ship){
-        ship.print_properties();
+        std::map<std::string, double> :: const_iterator it;
+        s << "\t\t Name of ship: " << ship.get_name() << "\n";
+        s << "\t\t Type of ship: " << ship.get_type() << "\n";
+        s << "\t\t Capitan: " << ship.capitan << "\n";
+        for (it = ship.prop.begin(); it != ship.prop.end(); it ++){
+            s << it->first << ": " << it->second << "\n";
+        }
+        s << std::endl;
         return s;
     }
 
@@ -57,7 +64,7 @@ namespace Ships{
     }
 
     double Transport_ship::possible_speed(){ // максимально возможная скорость при текущей загрузке корабля
-        return (cargo[1] / cargo[0]) * get_property(0) * cargo[2];
+        return (cargo[1] / cargo[0]) * get_property("max velocity") * cargo[2];
     }
 
     void Transport_ship::set_cur_speed(double new_speed){
@@ -73,7 +80,7 @@ namespace Ships{
              delete armaments[i];
      }
 
-     void Security_ship::change_armament(int i, int property, double new_value, std::string type) {
+     void Security_ship::change_armament(int i, std::string property, double new_value, std::string type) {
          // номер оружия, свойство оружия, новое значение, тип оружия
          if (i < 0 || i > 3) throw "Invalid place for armament";
          Basic::Armament *armament = armaments[i];
@@ -137,7 +144,7 @@ namespace Ships{
 
          // определить, долетит ли снаряд
          if (cur_armament != nullptr) // на выбранном месте расположено оружие
-             if (cur_armament->get_property(2) >= distance) // property[2] - range, property[6] - status
+             if (cur_armament->get_property("range") >= distance) // property[2] - range, property[6] - status
                  answer = cur_armament->shoot();
          return answer;
      }
@@ -148,13 +155,13 @@ namespace Ships{
      }
 
     std::ostream &operator<<(std::ostream &s, const Transport_ship &ship){
-         ship.print_properties();
+         s << ship;
          s << "Max cargo: " << (ship.cargo)[0] << " Current cargo: " << (ship.cargo)[1] << " Coefficient of decrease: " << (ship.cargo)[2] <<"\n";
          return s;
      }
 
     std::ostream &operator<<(std::ostream &s, const Security_ship &ship){
-        ship.print_properties();
+        s << ship;
         s << "stern \t" << "bow \t" << "right board \t" << "left board \n";
         for (int i = 0; i < 4; i ++){
             if ((ship.armaments)[i] != nullptr) s << (ship.armaments[i])->get_type() << " \t";
@@ -177,11 +184,12 @@ namespace Ships{
 
     Military_transport_ship::Military_transport_ship( std::string new_type, std::string name, double max_velocity,
                                                       double max_life, double cost, double max_cargo, double coef_decrease):
-            Transport_ship( new_type, name, max_velocity,max_life, cost,max_cargo,coef_decrease){}
+            Transport_ship( new_type, name, max_velocity,max_life, cost,max_cargo,coef_decrease),
+            Security_ship(new_type,name,max_velocity, max_life, cost), Ship(new_type,name,max_velocity, max_life, cost){}
 
 
     std::ostream &operator<<(std::ostream &s, const Military_transport_ship &ship){
-        ship.print_properties();
+        s << ship;
         s << "Max cargo: " << ship.get_info_cargo(0) << " Current cargo: " << ship.get_info_cargo(1) << " Coefficient of decrease: " << ship.get_info_cargo(2) <<"\n";
         s << "stern \t" << "bow \t" << "right board \t" << "left board \n";
         for (int i = 0; i < 4; i ++){

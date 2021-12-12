@@ -29,7 +29,7 @@ namespace Menu{
     }
 
     // Изменение характеристик корабля по его названию
-    void Mission::change_ship_property(int c_p, std::string name, int ship_property_index, double new_value){
+    void Mission::change_ship_property(int c_p, std::string name, std::string ship_property_index, double new_value){
         Ships::Ship *cur_ship;
         switch(c_p) {
             case 0:
@@ -100,7 +100,7 @@ namespace Menu{
 
         new_ship = new Ships::Ship;
         *new_ship = it->second;
-        cost = new_ship->get_property(4);
+        cost = new_ship->get_property("cost");
 
         switch (c_p) {
             case 0: { // add ship to convoy
@@ -133,7 +133,7 @@ namespace Menu{
 
         if (it == convoy->end()) throw "No such ship";
 
-        cost = (*it).info.ship->get_property(4);
+        cost = (*it).info.ship->get_property("cost");
         this->set_properties(1, this->get_properties(1) - cost); // change spend_money
         convoy->del_ship(name);
     }
@@ -207,7 +207,7 @@ namespace Menu{
             }
         }
 
-        cost = vec_it->get_property(5);
+        cost = vec_it->get_property("cost");
         //max_money - spend_money > 0
         if ((c_p == 0 && ((this->get_properties(0) - this->get_properties(1)) > 0)) || c_p == 1) {
             try {
@@ -225,7 +225,7 @@ namespace Menu{
 
     }
 
-    void Mission::change_armament(int c_p, std::string name, int place, int property, int new_value, std::string type){
+    void Mission::change_armament(int c_p, std::string name, int place, std::string property, int new_value, std::string type){
         Table<std::string, Info> :: Iterator it;
         std::vector <Basic::Armament> :: iterator vec_it;
         Ships::Security_ship *cur_ship;
@@ -275,7 +275,7 @@ namespace Menu{
             std::cout << *e << std::endl;
         }
 
-        cost = cur_armament->get_property(5);
+        cost = cur_armament->get_property("cost");
 
         try {
             cur_ship->remove_armament(place);
@@ -288,5 +288,4 @@ namespace Menu{
                 this->set_properties(1, this->get_properties(1) + cost); // change spend_money
         }
     }
-
 }

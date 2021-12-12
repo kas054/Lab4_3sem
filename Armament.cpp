@@ -12,7 +12,7 @@ namespace Basic {
         s << "Type of armament: " << vec.type << "\n";
         s << "damage\t" << "speed\t" << "range\t" << "max ammunition\t" << "cur_ammunition\t" << "cost\n \t";
         for (int i = 0; i < vec.count_properties(); i++) {
-            s << (vec.properties)[i] << "\t\t";
+            s << (vec.properties)[i] << "\t";
          }
         s << std::endl;
         return s;
@@ -35,37 +35,57 @@ namespace Basic {
         properties[5] = cost;
     }
 
-    double Armament::get_property(int i) const{
+    void Armament::change_property(std::string property, double new_value){
+        std::vector<std::string> :: iterator it = prop.begin();
+        for (int i = 0; i < prop.size(); i ++){
+            if (*it == property) properties[i] = new_value;
+            it ++;
+        }
+    }
+
+    double Armament::get_property(std::string property) const{
+        std::vector<std::string> :: const_iterator it = prop.begin();
         double answer = 0;
-        if (i < properties_count) answer = properties[i];
+        for (int i = 0; i < prop.size(); i ++) {
+            if (*it == property) {
+                answer = properties[i];
+                break;
+            }
+            it++;
+        }
         return answer;
     }
 
     void Armament::change_status() { // с каждым шагом статус стрельбы уменьшается на скорострельность
-        if (properties[6] > 0)
-            properties[6] -= properties[1];
-        if (properties[6] < 0) properties[6] = 0;
+        double c_status = get_property("status"), c_rate_f =  get_property("rate of fire"), new_status;
+        if ( c_status > 0){
+            new_status = c_status - c_rate_f;
+            change_property("status", new_status);
+        }
+        if ( get_property("status") < 0) change_property("status", 0);
     }
 
     double Armament::shoot(){
-        double answer = 0;
-        if (properties[6] <= 0 && properties[4] > 0) {
-            properties[6] = 1; // status
-            properties[4] -= 1; // current ammunition
-            answer = properties[0]; // properties[0] = damage;
+        double answer = 0, c_ammunition = get_property("cur ammunition");
+        if ( get_property("status") <= 0 && c_ammunition > 0){
+            change_property("status", 1);
+            change_property("cur ammunition",c_ammunition - 1);
+            answer = get_property("damage");
         }
         return answer;
     }
 
     std::istream & operator >> (std::istream &in, Armament &armament)
     {
+        std::vector<std::string> :: iterator it = armament.prop.begin();
         std::string type;
         double property;
         in >> type;
         armament.change_type(type);
-        for (int i = 0; i < armament.count_properties() - 1; i ++) {
+        for (int i = 0; i < armament.count_properties(); i ++) {
             in >> property;
-            armament.change_property(i, property);
+            armament.change_property(*it, property);
+            it ++;
         }
         return in;
     }

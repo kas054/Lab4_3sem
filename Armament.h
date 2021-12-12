@@ -6,25 +6,27 @@
 #define LAB4_3SEM_ARMAMENT_H
 #include <iostream>
 #include <string>
+#include <vector>
 namespace Basic {
     class Armament {
     private:
         std::string type = "";
         static const int properties_count = 7;
+        std::vector<std::string> prop = {"damage","rate of fire", "range", "max ammunition", "cur ammunition","cost", "status" };
         double properties[properties_count] = {0}; //damage - 0,  rate of fire - 1, range - 2, max_ammunition - 3, cur_ammunition - 4, cost - 5, status - 6
     public:
-        Armament() {};
+        Armament(){};
         ~Armament(){};
         Armament(std::string new_type,double damage, double fire_rate,
                  double range, double max_ammunition, double cost);
 
-        double get_property(int i) const;
+        double get_property(std::string property) const;
 
         int count_properties() const { return properties_count; }
 
         std::string get_type() const { return type; }
 
-        void change_property(int i, double new_value) { if (i < properties_count ) properties[i] = new_value; }
+        void change_property(std::string property, double new_value); //{ if (i < properties_count ) properties[i] = new_value; }
 
         void change_type(std::string new_type) { type = new_type; }
 

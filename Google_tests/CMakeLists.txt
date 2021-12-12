@@ -3,7 +3,7 @@ add_subdirectory(lib)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 
-add_executable(Google_Tests_run ../Ship.cpp ../Armament.cpp T_Ships.cpp)
+add_executable(Google_Tests_run ../Ship.cpp ../Armament.cpp T_Ships.cpp ../Basic_config.cpp)
 
 target_link_libraries(Google_Tests_run)
 
