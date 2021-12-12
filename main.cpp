@@ -25,5 +25,6 @@ int main() {
    armament.change_property("rate of fire", 100000);
     std::cout << armament.get_property("rate of fire");
     std::cout << "Hello, World!" << std::endl;*/
+    //class Menu::Mission mission;
     return 0;
 }

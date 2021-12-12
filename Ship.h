@@ -16,7 +16,6 @@ namespace Ships {
         Basic::Capitan capitan;
         static const int properties_count = 5;
         std::map<std::string, double> prop = {{"max velocity", 0}, {"cur velocity", 0}, {"max life",0}, {"cur life",0}, {"cost", 0}};
-        double properties[properties_count] = {0}; // max_velocity - 0, cur_velocity - 1, max_life - 2, cur_life - 3, cost - 4
 
     public:
         /**
@@ -132,7 +131,7 @@ namespace Ships {
     class Transport_ship: public virtual Ship {
     private:
         static const int size = 3;
-        double cargo[size] = {0}; //max_cargo - 0, cur_cargo - 1, coef_decrease - 2; (from 1% to 20%)
+        double cargo[size] = {0}; //max_cargo - 0, cur_cargo - 1, coef_decrease - 2; (from 1% to 20%) * max velocity
     public:
         /**
          * init constructor

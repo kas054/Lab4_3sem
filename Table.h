@@ -95,19 +95,24 @@ namespace Pattern {
             return -1;
         }
     public:
+
         // конструкторы
         Table(): current_size(0), elements(new Table_element<IND, INF>[QUOTA]), max_size(QUOTA) {}; // пустой
+
         Table(const Table<IND, INF> &vector2): current_size(vector2.current_size), max_size(vector2.max_size) // копирующий консруктор
         {
             elements = new Table_element<IND, INF>[current_size];
             for (int i = 0; i < current_size; i++)
                 elements[i] = vector2.elements[i];
         }
+
         Table(Table<IND, INF> &&vector2): current_size(vector2.current_size), max_size(vector2.max_size), elements(vector2.elements){ // перемещающий конструктор
             vector2.elements = nullptr;
         }
+
         // деструктор
         ~Table() {delete [] elements;}
+
         // операторы присваивания
         Table<IND, INF> &operator =(const Table<IND, INF> &st){
             if (this != &st){
@@ -120,6 +125,7 @@ namespace Pattern {
             }
             return *this;
         }
+
         Table<IND, INF> &operator =(Table<IND, INF> &&st)
         {
             int tmp = current_size;
@@ -133,6 +139,7 @@ namespace Pattern {
             st.elements = ptr;
             return *this;
         }
+
         // операторы индексирования
         INF &operator[](IND &s) // l-value
         {
@@ -141,6 +148,7 @@ namespace Pattern {
             if (i < 0) throw error;
             else return elements[i].info;
         }
+
         const INF &operator[](const IND &s) const // r-value
         {
             int i = get_pos(s);
@@ -148,6 +156,7 @@ namespace Pattern {
             throw "No such element";
             return elements[i].info;
         }
+
         // вывод
         template <class Id, class If>
         friend std::ostream & operator <<(std::ostream &s, const Table<Id,If> &tab){
@@ -156,19 +165,25 @@ namespace Pattern {
                 s << (*it).index << " - " << it->info << "\n";
             return s;
         }
+
         // объявления для итератора
         typedef Iterator<IND, INF> Iterator;
+
         // методы итератора
         Iterator begin() const { return Iterator(this->elements);}
+
         Iterator end() const { return Iterator(this->elements + current_size);}
+
         Iterator find(const IND &s) const {
             int i = get_pos(s);
             if(i < 0)
                 i = current_size;
             return Iterator(this->elements + i);
         }
+
         // методы таблицы
         int get_count() const { return current_size; };
+
         void del_ship(const std::string &name){
             //Table<std::string, struct Info>::Iterator it;
             int i = get_pos(name);
@@ -179,6 +194,7 @@ namespace Pattern {
                 current_size -=1;
             }
         }
+
         void add_ship(Ships::Ship *new_ship, Basic::Coordinate coordinates){
             typedef Table_element<std::string, struct Info>  Tab_elem;
 
@@ -195,11 +211,17 @@ namespace Pattern {
             elements[current_size] = new_elem;
             current_size += 1;
         }
+
+        void change_coord(std::string &name, double x, double y){
+            struct Info get_info = (*this)[name];
+            get_info.cur_place.x = x;
+            get_info.cur_place.y = y;
+        }
+
         Ships::Ship *description_ship(const std::string  &name){
             struct Info get_info = (*this)[name];
             return get_info.ship;
         }
-
     };
      /*
        Table <std::string, struct Info> a;

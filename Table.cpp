@@ -1,12 +1,12 @@
 //
 // Created by PC on 08.11.2021.
 //
-
+/*
 #include "Table.h"
 
 namespace Pattern {
 
-    /*Info::Info(const Info &inf) {
+   Info::Info(const Info &inf) {
         ship = inf.ship;
         cur_place.x = (inf.cur_place).x;
         cur_place.y = (inf.cur_place).y;
@@ -123,7 +123,7 @@ namespace Pattern {
         struct Info get_info = (*this)[name];
         return get_info.ship;
     }
-/*
+
     //добавить корабль
     template <>
     void Table<std::string, struct Info>::add_ship(Ships::Ship *new_ship, Basic::Coordinate coordinates){
@@ -195,5 +195,5 @@ namespace Pattern {
         Iterator<IND, INF> result(*this);
         ++cur;
         return result;
-    }*/
-}
+    }
+} */

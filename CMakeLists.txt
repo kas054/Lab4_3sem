@@ -3,5 +3,5 @@ project(Lab4_3sem)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Lab4_3sem main.cpp Armament.cpp Armament.h Ship.cpp Ship.h Table.cpp Table.h Mission.cpp Mission.h Basic_config.cpp)
+add_executable(Lab4_3sem main.cpp Armament.cpp Armament.h Ship.cpp Ship.h Table.cpp Table.h Mission.cpp Mission.h Basic_config.cpp Game.cpp)
 add_subdirectory(Google_tests)

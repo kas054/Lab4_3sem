@@ -12,9 +12,6 @@ namespace Ships{
         prop["max velocity"] = max_velocity;
         prop["max life"] = max_life;
         prop["cost"] = cost;
-        /*properties[0] = max_velocity;
-        properties[2] = max_life;
-        properties[4] = cost; */
     }
 
     void Ship::set_velocity(double velocity){
@@ -73,7 +70,6 @@ namespace Ships{
         else if (new_speed > m_pos_speed) new_speed = m_pos_speed;
         Ship::set_velocity(new_speed);
     }
-
 
      Security_ship:: ~Security_ship(){
          for (int i = 0; i < 4; i ++)
