@@ -381,8 +381,7 @@ namespace Menu{
         }
     }
 
-    void Manage::move_convoy(std::string direction) {
-        Pattern::Table<std::string, Info> *convoy = mission->convoy;
+    void Mission::move_convoy(std::string direction) {
         Pattern::Table<std::string, Info> :: Iterator it;
         Basic::Coordinate tmp_coord;
         double change_x = 0, change_y = 0, velocity;
@@ -395,7 +394,7 @@ namespace Menu{
         for (it = convoy->begin(); it != convoy->end(); it ++){
             velocity = it->info.ship->get_property("cur velocity");
             tmp_coord = it->info.cur_place;
-            mission->change_coord(0, it->index, tmp_coord.x + change_x * velocity, tmp_coord.y + change_y * velocity);
+            change_coord(0, it->index, tmp_coord.x + change_x * velocity, tmp_coord.y + change_y * velocity);
         }
     }
 
