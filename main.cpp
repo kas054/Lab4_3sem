@@ -4,7 +4,7 @@
 int main() {
 
     std::string st = "type A";
-    std::string st1 = "type A";
+    std::string st1 = "type B";
     double number = 1;
 
     std::map<std::string, double> :: const_iterator it;
@@ -13,10 +13,12 @@ int main() {
     Ships::Ship *a = new Ships::Ship(st, st, number, number, number);
     Ships::Transport_ship *b = new Ships::Transport_ship(st, st, number, number, number, number, number);
     Ships::Military_transport_ship *d = new Ships::Military_transport_ship(st, st, number, number, number, number, number);
-    Ships::Security_ship *c = new Ships::Security_ship(st, st1, number, number, number);
+    Ships::Security_ship *c = new Ships::Security_ship(st, st, number, number, number);
+    Ships::Security_ship *c2 = new Ships::Security_ship(st1, st1, number, number, number);
 
     Menu::Basic_config *b_conf = new Menu::Basic_config;
     b_conf->add_ship(c);
+    b_conf->add_ship(c2);
 
     Pattern::Table <std::string, Pattern::Info> *conv = new Pattern::Table <std::string, Pattern::Info>;
     Pattern::Table <std::string, Pattern::Info> *pirates = new Pattern::Table <std::string, Pattern::Info>;
@@ -30,8 +32,12 @@ int main() {
     mission.set_coord_A_B(0, 4, 5);
     mission.set_coord_A_B(1, 30, 20);
 
-    mission.buy_ship(0, c->get_name());
+    //mission.buy_ship(0, c->get_name());
+    mission.buy_ship(0, c2->get_name());
     mission.buy_ship(1, c->get_name());
+   // mission.buy_ship(1, c2->get_name());
+   // mission.buy_ship(1, c->get_name());
+   // mission.buy_ship(1, c2->get_name());
 
     mission.add_pirates_coordinate(34, 25);
     mission.add_pirates_coordinate(25, 6);
@@ -39,6 +45,7 @@ int main() {
     mission.add_pirates_coordinate(17, 6);
 
     mission.distribution_pirates();
+    mission.start_coord();
 
     mission.draw();
     delete b_conf;

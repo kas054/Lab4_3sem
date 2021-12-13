@@ -540,9 +540,9 @@ namespace Menu{
 
         water_image.loadFromFile("../Mission/Imagine/water.png");
         base_c_imagine.loadFromFile("../Mission/Imagine/Base_convoy.png");
-        base_p_imagine.loadFromFile("../Mission/Imagine/Base_convoy.png");
-        pirates_imagine.loadFromFile("../Mission/Imagine/pirate.png");
-        convoy_imagine.loadFromFile("../Mission/Imagine/pirate.png");
+        base_p_imagine.loadFromFile("../Mission/Imagine/base_b.png");
+        pirates_imagine.loadFromFile("../Mission/Imagine/pirates8.png");
+        convoy_imagine.loadFromFile("../Mission/Imagine/security3.png");
 
 
         sf::Texture water_texture;
