@@ -6,7 +6,7 @@
 #define LAB4_3SEM_SHIP_H
 #include <utility>
 #include <map>
-#include "Armament.h"
+#include "../Basic/Armament.h"
 
 namespace Ships {
     class Ship {

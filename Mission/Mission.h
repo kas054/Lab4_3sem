@@ -4,7 +4,7 @@
 
 #ifndef LAB4_3SEM_MISSION_H
 #define LAB4_3SEM_MISSION_H
-#include "Table.h"
+#include "../Table/Table.h"
 #include <vector>
 #include <map>
 namespace Menu {
@@ -112,6 +112,10 @@ namespace Menu {
          * @param fd file name
          */
         void safe_table(FILE *fd, Menu::Table<std::string, Menu::Info> *tab);
+
+        void load_armament(FILE *fd, Basic::Armament *armament);
+
+        void safe_armament(FILE *fd, Basic::Armament *armament);
     };
 
     class Manage{

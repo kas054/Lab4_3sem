@@ -24,15 +24,54 @@ namespace Menu {
         return fd;
     }
 
+    void Basic_config::load_armament(FILE *fd, Basic::Armament *armament) {
+        double value = 0;
+        fread(&value, sizeof(double), 1, fd);
+        armament->change_property("damage", value);
+        fread(&value, sizeof(double), 1, fd);
+        armament->change_property("rate of fire", value);
+        fread(&value, sizeof(double), 1, fd);
+        armament->change_property("range", value);
+        fread(&value, sizeof(double), 1, fd);
+        armament->change_property("max ammunition", value);
+        fread(&value, sizeof(double), 1, fd);
+        armament->change_property("cur ammunition", value);
+        fread(&value, sizeof(double), 1, fd);
+        armament->change_property("cost", value);
+        fread(&value, sizeof(double), 1, fd);
+        armament->change_property("status", value);
+    }
+
+    void safe_armament(FILE *fd, Basic::Armament *armament){
+        double value = 0;
+        value = armament->get_property("damage");
+        fwrite(&value, sizeof(double), 1, fd);
+        value = armament->get_property("rate of fire");
+        fwrite(&value, sizeof(double), 1, fd);
+        value = armament->get_property("range");
+        fwrite(&value, sizeof(double), 1, fd);
+        value = armament->get_property("max ammunition");
+        fwrite(&value, sizeof(double), 1, fd);
+        value = armament->get_property("cur ammunition");
+        fwrite(&value, sizeof(double), 1, fd);
+        value = armament->get_property("cost");
+        fwrite(&value, sizeof(double), 1, fd);
+        value = armament->get_property("status");
+        fwrite(&value, sizeof(double), 1, fd);
+    }
+
     void Basic_config::load_b(std::string fname, FILE *fd) { // basic config
         Ships::Security_ship *sec_ship;
         Ships::Transport_ship *t_ship;
+        Basic::Armament *arm = new Basic::Armament;//
         int sz_ship, sz_armament, sz_cap;
         // открываем файл на чтение и запись
         fd = fopen(fname.c_str(), "r+b");
 
         if (fd == nullptr) throw "No such file";
 
+        load_armament(fd, arm);
+/*
         // считываем количество
         fread(&sz_ship, sizeof(int), 1, fd);
         fread(&sz_armament, sizeof(int), 1, fd);
@@ -58,10 +97,11 @@ namespace Menu {
 
             delete tmp_ship;
         }
-
+*/
         // закрытие файла
         fclose(fd);
         fd = nullptr;
+        delete arm;
     }
 
     void Basic_config::safe_b(FILE *fd) { // сохранение базовой конфигурации

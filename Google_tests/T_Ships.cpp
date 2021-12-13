@@ -2,7 +2,7 @@
 // Created by PC on 21.11.2021.
 //
 #include "gtest/gtest.h"
-#include "../Ship.h"
+#include "../Ships/Ship.h"
 #define EXPECT_NO_THROW(statement) \
   GTEST_TEST_NO_THROW_(statement, GTEST_NONFATAL_FAILURE_)
 

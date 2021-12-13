@@ -4,7 +4,7 @@
 
 #ifndef LAB4_3SEM_TABLE_H
 #define LAB4_3SEM_TABLE_H
-#include "Ship.h"
+#include "../Ships/Ship.h"
 namespace Pattern {
 
     class Info{
