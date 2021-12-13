@@ -3,7 +3,7 @@ project(Lab4_3sem)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Lab4_3sem main.cpp Basic/Armament.cpp Basic/Armament.h Ships/Ship.cpp Ships/Ship.h Table/Table.h Mission/Mission.cpp Mission/Mission.h Mission/Basic_config.cpp Mission/Game.cpp)
+add_executable(Lab4_3sem main.cpp Basic/Armament.cpp Basic/Armament.h Ships/Ship.cpp Ships/Ship.h Table/Table.h Mission/Mission.cpp Mission/Mission.h Mission/Basic_config.cpp)
 add_subdirectory(Google_tests)
 
 include_directories(/usr/local/include)

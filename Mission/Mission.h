@@ -72,61 +72,6 @@ namespace Menu {
         void add_pirates_coordinate(double x, double y);
 
         void change_coord(int c_p, std::string name, double x, double y);
-    };
-
-    class Basic_config {
-    public:
-        std::map<std::string, Ships::Ship> ship;
-
-        std::vector<Basic::Armament> armament;
-
-        std::vector<Basic::Capitan> capitan;
-
-        void add_ship(Ships::Ship *ship);
-
-        /**
-         * open file or create new
-         * @param fname file name
-         * @return file pointer
-         */
-        FILE * load_from_file(std::string fname = "");
-        /**
-         * load basic configurations
-         */
-        void load_b(std::string fname, FILE *fd);
-
-        void safe_b(FILE *fd);
-        /**
-         * load information about ship
-         * @param fd File name
-         * @param tmp_ship current ship
-         */
-        void load_basic_info_ship(FILE *fd, Ships::Ship *tmp_ship);
-        /**
-         * load information about cargo
-         */
-        void load_transport_ship(FILE *, Ships::Transport_ship *);
-
-        /**
-         * save mission
-         * @param fd file name
-         */
-        void safe_table(FILE *fd, Menu::Table<std::string, Menu::Info> *tab);
-
-        void load_armament(FILE *fd, Basic::Armament *armament);
-
-        void safe_armament(FILE *fd, Basic::Armament *armament);
-    };
-
-    class Manage{
-    private:
-       class Mission *mission = nullptr;
-    public:
-        Manage(Mission *m) {mission = m;}
-
-        Mission *get_mission() {return mission;}
-
-        void set_mission(Mission *m) {mission = m;}
 
         void distribution_pirates();
 
@@ -148,5 +93,34 @@ namespace Menu {
 
         void convoy_shoot(std::vector<std::string> &convoy_ship, std::string pirate);
     };
+
+    class Basic_config {
+    public:
+        std::map<std::string, Ships::Ship> ship;
+
+        std::vector<Basic::Armament> armament;
+
+        std::vector<Basic::Capitan> capitan;
+
+        void add_ship(Ships::Ship *ship);
+
+        FILE * load_from_file(std::string fname = "");
+
+        void load_b(std::string fname, FILE *fd);
+
+        void safe_b(FILE *fd);
+
+        void load_basic_info_ship(FILE *fd, Ships::Ship *tmp_ship);
+
+        void load_transport_ship(FILE *, Ships::Transport_ship *);
+
+        void safe_table(FILE *fd, Menu::Table<std::string, Menu::Info> *tab);
+
+        void load_armament(FILE *fd, Basic::Armament *armament);
+
+        void safe_armament(FILE *fd, Basic::Armament *armament);
+
+    };
+
 }
 #endif //LAB4_3SEM_MISSION_H
