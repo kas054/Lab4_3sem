@@ -1,0 +1,62 @@
+\hypertarget{_armament_8h_source}{}\doxysection{Armament.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by PC on 06.11.2021.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef LAB4\_3SEM\_ARMAMENT\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define LAB4\_3SEM\_ARMAMENT\_H}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{9 \textcolor{keyword}{namespace }Basic \{}
+\DoxyCodeLine{10     \textcolor{keyword}{class }\mbox{\hyperlink{class_basic_1_1_armament}{Armament}} \{}
+\DoxyCodeLine{11     \textcolor{keyword}{private}:}
+\DoxyCodeLine{12         std::string type = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{13         \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} properties\_count = 7;}
+\DoxyCodeLine{14         \textcolor{keywordtype}{double} properties[properties\_count] = \{0\}; \textcolor{comment}{//damage -\/ 0,  rate of fire -\/ 1, range -\/ 2, max\_ammunition -\/ 3, cur\_ammunition -\/ 4, cost -\/ 5, status -\/ 6}}
+\DoxyCodeLine{15     \textcolor{keyword}{public}:}
+\DoxyCodeLine{16         \mbox{\hyperlink{class_basic_1_1_armament}{Armament}}() \{\};}
+\DoxyCodeLine{17         \mbox{\hyperlink{class_basic_1_1_armament}{\string~Armament}}()\{\};}
+\DoxyCodeLine{18         \mbox{\hyperlink{class_basic_1_1_armament}{Armament}}(std::string new\_type,\textcolor{keywordtype}{double} damage, \textcolor{keywordtype}{double} fire\_rate,}
+\DoxyCodeLine{19                  \textcolor{keywordtype}{double} range, \textcolor{keywordtype}{double} max\_ammunition, \textcolor{keywordtype}{double} cost);}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21         \textcolor{keywordtype}{double} get\_property(\textcolor{keywordtype}{int} i) \textcolor{keyword}{const};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23         \textcolor{keywordtype}{int} count\_properties()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} properties\_count; \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25         std::string get\_type()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} type; \}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \textcolor{keywordtype}{void} change\_property(\textcolor{keywordtype}{int} i, \textcolor{keywordtype}{double} new\_value) \{ \textcolor{keywordflow}{if} (i < properties\_count ) properties[i] = new\_value; \}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29         \textcolor{keywordtype}{void} change\_type(std::string new\_type) \{ type = new\_type; \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31         \textcolor{keywordtype}{double} shoot();}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33         \textcolor{keywordtype}{void} change\_status();}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35         \textcolor{keyword}{friend} std::istream \&operator>>(std::istream \&, \mbox{\hyperlink{class_basic_1_1_armament}{Armament}} \&);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \textcolor{keyword}{friend} std::ostream \&operator<<(std::ostream \&, \textcolor{keyword}{const} \mbox{\hyperlink{class_basic_1_1_armament}{Armament}} \&);}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_basic_1_1_coordinate}{Coordinate}}\{}
+\DoxyCodeLine{42         \textcolor{keywordtype}{double} x;}
+\DoxyCodeLine{43         \textcolor{keywordtype}{double} y;}
+\DoxyCodeLine{44     \};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_basic_1_1_capitan}{Capitan}}\{}
+\DoxyCodeLine{47         std::string name;}
+\DoxyCodeLine{48         std::string rank;}
+\DoxyCodeLine{49         \mbox{\hyperlink{struct_basic_1_1_capitan}{Capitan}}(): name(\textcolor{stringliteral}{"{}"{}}), rank(\textcolor{stringliteral}{"{}"{}}) \{\}}
+\DoxyCodeLine{50         \mbox{\hyperlink{struct_basic_1_1_capitan}{Capitan}}(std::string n\_name, std::string n\_rank): name(n\_name), rank(n\_rank) \{\}}
+\DoxyCodeLine{51     \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     std::ostream \&operator<<(std::ostream \&, \textcolor{keyword}{const} \mbox{\hyperlink{struct_basic_1_1_capitan}{Capitan}} \&);}
+\DoxyCodeLine{54     std::ostream \&operator<<(std::ostream \&, \textcolor{keyword}{const} \mbox{\hyperlink{struct_basic_1_1_coordinate}{Coordinate}} \&);}
+\DoxyCodeLine{55 \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//LAB4\_3SEM\_ARMAMENT\_H}}
+
+\end{DoxyCode}

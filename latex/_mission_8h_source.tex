@@ -1,0 +1,93 @@
+\hypertarget{_mission_8h_source}{}\doxysection{Mission.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by PC on 21.11.2021.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef LAB4\_3SEM\_MISSION\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define LAB4\_3SEM\_MISSION\_H}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}Table.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }Menu \{}
+\DoxyCodeLine{11     \textcolor{keyword}{using} \mbox{\hyperlink{class_pattern_1_1_info}{Pattern::Info}};}
+\DoxyCodeLine{12     \textcolor{keyword}{using} \mbox{\hyperlink{class_pattern_1_1_table}{Pattern::Table}};}
+\DoxyCodeLine{13     \textcolor{keyword}{class }\mbox{\hyperlink{class_menu_1_1_mission}{Mission}} \{}
+\DoxyCodeLine{14         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{class_menu_1_1_basic__config}{Basic\_config}};}
+\DoxyCodeLine{15     \textcolor{keyword}{private}:}
+\DoxyCodeLine{16         \textcolor{keyword}{class }\mbox{\hyperlink{class_menu_1_1_basic__config}{Basic\_config}} *config;}
+\DoxyCodeLine{17         \mbox{\hyperlink{struct_basic_1_1_capitan}{Basic::Capitan}} commander;}
+\DoxyCodeLine{18         \mbox{\hyperlink{class_pattern_1_1_table}{Table <std::string, Info>}} *convoy;}
+\DoxyCodeLine{19         \mbox{\hyperlink{class_pattern_1_1_table}{Table <std::string, Info>}} *pirates;}
+\DoxyCodeLine{20         \textcolor{comment}{/* 0 -\/ max\_money, 1 -\/ spend\_money, 2 -\/ full\_cargo, 3 -\/ min\_cargo, 4 -\/ cur\_cargo,}}
+\DoxyCodeLine{21 \textcolor{comment}{          5 -\/ delivered\_cargo, 6 -\/ max\_count\_ship\_c, 7 -\/ max\_count\_ship\_p, 8 -\/ size A, 9 -\/ size B */}}
+\DoxyCodeLine{22         \textcolor{keywordtype}{int} properties[10] = \{0\};}
+\DoxyCodeLine{23         \mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic::Coordinate}} coordinates\_A = \{0, 0\};}
+\DoxyCodeLine{24         \mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic::Coordinate}} coordinates\_B = \{0, 0\};}
+\DoxyCodeLine{25         std::vector<Basic::Coordinate> coordinates\_pirates;}
+\DoxyCodeLine{26         \textcolor{comment}{// параметры появления пиратов?}}
+\DoxyCodeLine{27     \textcolor{keyword}{public}:}
+\DoxyCodeLine{28         \mbox{\hyperlink{class_menu_1_1_mission}{Mission}}() : convoy(\textcolor{keyword}{nullptr}), pirates(\textcolor{keyword}{nullptr}) \{\};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         \textcolor{keywordtype}{float} p\_count()\textcolor{keyword}{ const }\{\textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(properties) / \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int});\}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keywordtype}{double} get\_properties(\textcolor{keywordtype}{int} i)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{if} (i < p\_count()  \&\& i >= 0) \textcolor{keywordflow}{return} properties[i]; \textcolor{keywordflow}{else} \textcolor{keywordflow}{return} 0;\} \textcolor{comment}{// i -\/ номер характеристики}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \textcolor{keywordtype}{void} set\_properties(\textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} new\_value) \{ \textcolor{keywordflow}{if} (i < p\_count()  \&\& i >= 0) properties[i] = new\_value; \}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36        \textcolor{keyword}{const} \mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic::Coordinate}} *get\_coord\_A\_B(\textcolor{keywordtype}{int} i) \textcolor{keyword}{const}; \textcolor{comment}{// i == 0: A, i == 1: B}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         \textcolor{keywordtype}{void} set\_coord\_A\_B(\textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40         \textcolor{keywordtype}{void} change\_ship\_property(\textcolor{keywordtype}{int} c\_p, std::string name, \textcolor{keywordtype}{int} ship\_property\_index, \textcolor{keywordtype}{double} new\_value); \textcolor{comment}{//c\_p == 0: конвой, c\_p == 1: пираты}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42         \textcolor{keywordtype}{void} change\_name\_ship(\textcolor{keywordtype}{int} c\_p, std::string name, std::string new\_name);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \textcolor{keywordtype}{void} change\_ship\_type(\textcolor{keywordtype}{int} c\_p, std::string name, std::string new\_type);}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \textcolor{keywordtype}{void} change\_ship\_cap(\textcolor{keywordtype}{int} c\_p, std::string name, std::string name\_cap);}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48         \mbox{\hyperlink{class_ships_1_1_ship}{Ships::Ship}} *get\_ship(\textcolor{keywordtype}{int} c\_p, std::string name) \textcolor{keyword}{const};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50         \textcolor{keywordtype}{void} buy\_ship(\textcolor{keywordtype}{int} c\_p, std::string ship\_type);}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52         \textcolor{keywordtype}{void} sell\_ship(std::string name);}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54         \textcolor{keywordtype}{void} del\_ship(\textcolor{keywordtype}{int} c\_p, std::string name);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56         \textcolor{keywordtype}{void} add\_cargo(std::string name, \textcolor{keywordtype}{int} weight);}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58         \textcolor{keywordtype}{void} auto\_cargo();}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60         \textcolor{keywordtype}{void} buy\_armament(\textcolor{keywordtype}{int} c\_p, std::string name, \textcolor{keywordtype}{int} place, std::string armament); \textcolor{comment}{// place-\/ расположение оружия}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62         \textcolor{keywordtype}{void} change\_armament(\textcolor{keywordtype}{int} c\_p, std::string name, \textcolor{keywordtype}{int} place, \textcolor{keywordtype}{int} property, \textcolor{keywordtype}{int} new\_value, std::string type = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         \textcolor{keywordtype}{void} sell\_armament(\textcolor{keywordtype}{int} c\_p, std::string name, \textcolor{keywordtype}{int} place);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{keyword}{class }\mbox{\hyperlink{class_menu_1_1_basic__config}{Basic\_config}} \{}
+\DoxyCodeLine{69     \textcolor{keyword}{public}:}
+\DoxyCodeLine{70         std::map<std::string, Ships::Ship> ship;}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         std::vector<Basic::Armament> armament;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74         std::vector<Basic::Capitan> capitan;}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76         \textcolor{keywordtype}{void} add\_ship(\mbox{\hyperlink{class_ships_1_1_ship}{Ships::Ship}} ship);}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{83         FILE * \mbox{\hyperlink{class_menu_1_1_basic__config_ac30ee1ceea5db901e3588fec6b4703d6}{load\_from\_file}}(std::string fname = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{87         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_1_1_basic__config_a2d094ea2806a4d43c37ca92c3f92d527}{load\_b}}(std::string fname, FILE *fd);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89         \textcolor{keywordtype}{void} safe\_b(FILE *fd);}
+\DoxyCodeLine{95         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_1_1_basic__config_a44a3d174e652231edb1c607dcf822eac}{load\_basic\_info\_ship}}(FILE *fd, \mbox{\hyperlink{class_ships_1_1_ship}{Ships::Ship}} *tmp\_ship);}
+\DoxyCodeLine{99         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_1_1_basic__config_a1636328620032e7635d717e36545f268}{load\_transport\_ship}}(FILE *, \mbox{\hyperlink{class_ships_1_1_transport__ship}{Ships::Transport\_ship}} *);}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{105         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_1_1_basic__config_ac042ccf677448d3c3e44586c98c1029d}{safe\_table}}(FILE *fd, \mbox{\hyperlink{class_pattern_1_1_table}{Menu::Table<std::string, Menu::Info>}} *tab);}
+\DoxyCodeLine{106     \};}
+\DoxyCodeLine{107 \}}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//LAB4\_3SEM\_MISSION\_H}}
+
+\end{DoxyCode}

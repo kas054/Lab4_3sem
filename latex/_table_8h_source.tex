@@ -1,0 +1,215 @@
+\hypertarget{_table_8h_source}{}\doxysection{Table.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by PC on 08.11.2021.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef LAB4\_3SEM\_TABLE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define LAB4\_3SEM\_TABLE\_H}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}Ship.h"{}}}
+\DoxyCodeLine{8 \textcolor{keyword}{namespace }Pattern \{}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10     \textcolor{keyword}{class }\mbox{\hyperlink{class_pattern_1_1_info}{Info}}\{}
+\DoxyCodeLine{11     \textcolor{keyword}{public}:}
+\DoxyCodeLine{12         \mbox{\hyperlink{class_ships_1_1_ship}{Ships::Ship}} *ship;}
+\DoxyCodeLine{13         \mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic::Coordinate}} cur\_place;}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15         \mbox{\hyperlink{class_pattern_1_1_info}{Info}}(): ship(\textcolor{keyword}{nullptr}), cur\_place(\{0,0\})\{\}}
+\DoxyCodeLine{16         \mbox{\hyperlink{class_pattern_1_1_info}{Info}}(\mbox{\hyperlink{class_ships_1_1_ship}{Ships::Ship}} *s, \mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic::Coordinate}} p): ship(s), cur\_place(p) \{\}}
+\DoxyCodeLine{17         \mbox{\hyperlink{class_pattern_1_1_info}{Info}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_pattern_1_1_info}{Info}} \&inf)\{}
+\DoxyCodeLine{18             ship = inf.ship;}
+\DoxyCodeLine{19             cur\_place.x = (inf.cur\_place).x;}
+\DoxyCodeLine{20             cur\_place.y = (inf.cur\_place).y;}
+\DoxyCodeLine{21         \}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23         \mbox{\hyperlink{class_pattern_1_1_info}{Info}} \&operator=(\textcolor{keyword}{const} \mbox{\hyperlink{class_pattern_1_1_info}{Info}} \&st)\{}
+\DoxyCodeLine{24             \textcolor{keywordflow}{if} (\textcolor{keyword}{this} != \&st)\{}
+\DoxyCodeLine{25                 ship = st.ship;}
+\DoxyCodeLine{26             \}}
+\DoxyCodeLine{27             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{28         \}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30         \mbox{\hyperlink{class_pattern_1_1_info}{Info}} \&operator=(\mbox{\hyperlink{class_pattern_1_1_info}{Info}} \&\&st)\{}
+\DoxyCodeLine{31             ship = st.ship;}
+\DoxyCodeLine{32             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{33         \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35         \mbox{\hyperlink{class_pattern_1_1_info}{\string~Info}}() \{\textcolor{keyword}{delete} ship;\}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \textcolor{keyword}{friend} std::ostream \& operator <<(std::ostream \&s, \textcolor{keyword}{const} \mbox{\hyperlink{class_pattern_1_1_info}{Info}} \&inf) \{}
+\DoxyCodeLine{38             std::cout << inf.ship << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << inf.cur\_place <<std::endl;}
+\DoxyCodeLine{39             \textcolor{keywordflow}{return} s;}
+\DoxyCodeLine{40         \}}
+\DoxyCodeLine{41     \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keyword}{template} <\textcolor{keyword}{class} IND, \textcolor{keyword}{class} INF>}
+\DoxyCodeLine{44     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element}}\{}
+\DoxyCodeLine{45         IND index; \textcolor{comment}{// std::string}}
+\DoxyCodeLine{46         INF info; \textcolor{comment}{// class Info}}
+\DoxyCodeLine{47         \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element}}(): index(\textcolor{stringliteral}{"{}"{}}), info(INF()) \{\}}
+\DoxyCodeLine{48         \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element}}(\textcolor{keyword}{const} IND \&name, \textcolor{keyword}{const} INF \&inf): index(name), info(inf) \{\}}
+\DoxyCodeLine{49     \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keyword}{template} <\textcolor{keyword}{class} IND, \textcolor{keyword}{class} INF>}
+\DoxyCodeLine{52     \textcolor{keyword}{class }\mbox{\hyperlink{class_pattern_1_1_iterator}{Iterator}}\{}
+\DoxyCodeLine{53     \textcolor{keyword}{private}:}
+\DoxyCodeLine{54         \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}} *cur; \textcolor{comment}{// текущий элемент массива}}
+\DoxyCodeLine{55     \textcolor{keyword}{public}:}
+\DoxyCodeLine{56         \textcolor{comment}{// конструкторы}}
+\DoxyCodeLine{57         \mbox{\hyperlink{class_pattern_1_1_iterator}{Iterator}}(): cur(\textcolor{keyword}{nullptr})\{\}}
+\DoxyCodeLine{58         \mbox{\hyperlink{class_pattern_1_1_iterator}{Iterator}}(\mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}} *a): cur(a)\{\}}
+\DoxyCodeLine{59         \textcolor{comment}{// операторы сравнения}}
+\DoxyCodeLine{60         \textcolor{keywordtype}{int} operator !=(\textcolor{keyword}{const} \mbox{\hyperlink{class_pattern_1_1_iterator}{Iterator<IND, INF>}} \&it)\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{61             \textcolor{keywordflow}{return} cur != it.cur;}
+\DoxyCodeLine{62         \}}
+\DoxyCodeLine{63         \textcolor{keywordtype}{int} operator ==(\textcolor{keyword}{const} \mbox{\hyperlink{class_pattern_1_1_iterator}{Iterator<IND, INF>}} \&it)\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{64             \textcolor{keywordflow}{return} cur == it.cur;}
+\DoxyCodeLine{65         \}}
+\DoxyCodeLine{66         \textcolor{comment}{// доступ к элементам массива по указателю}}
+\DoxyCodeLine{67         \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}} \& operator *()\{}
+\DoxyCodeLine{68             \textcolor{keywordflow}{return} *cur;}
+\DoxyCodeLine{69         \}}
+\DoxyCodeLine{70         \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}} * operator -\/>()\{ \textcolor{keywordflow}{return} cur; \}}
+\DoxyCodeLine{71         \textcolor{comment}{// перемещение итератора на следующую позицию в массиве}}
+\DoxyCodeLine{72         \mbox{\hyperlink{class_pattern_1_1_iterator}{Iterator<IND, INF>}} \& operator ++()\{ \textcolor{comment}{// префиксный}}
+\DoxyCodeLine{73         ++cur;}
+\DoxyCodeLine{74         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{75     \}}
+\DoxyCodeLine{76         \mbox{\hyperlink{class_pattern_1_1_iterator}{Iterator<IND, INF>}} operator ++(\textcolor{keywordtype}{int}) \textcolor{comment}{// постфиксный}}
+\DoxyCodeLine{77         \{}
+\DoxyCodeLine{78             \mbox{\hyperlink{class_pattern_1_1_iterator}{Iterator<IND, INF>}} result(*\textcolor{keyword}{this});}
+\DoxyCodeLine{79             ++cur;}
+\DoxyCodeLine{80             \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{81         \}}
+\DoxyCodeLine{82     \};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{keyword}{template} <\textcolor{keyword}{class} IND, \textcolor{keyword}{class} INF>}
+\DoxyCodeLine{85     \textcolor{keyword}{class }\mbox{\hyperlink{class_pattern_1_1_table}{Table}} \{}
+\DoxyCodeLine{86         \textcolor{keyword}{friend} \textcolor{keyword}{class }Iterator<IND, INF>;}
+\DoxyCodeLine{87     \textcolor{keyword}{private}:}
+\DoxyCodeLine{88         \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} QUOTA = 10;}
+\DoxyCodeLine{89         \textcolor{keywordtype}{int} max\_size, current\_size;}
+\DoxyCodeLine{90         \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}} *elements;}
+\DoxyCodeLine{91         \textcolor{keywordtype}{int} get\_pos(\textcolor{keyword}{const} IND \&s)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{92             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < current\_size; i ++)}
+\DoxyCodeLine{93                 \textcolor{keywordflow}{if} (elements[i].index == s)}
+\DoxyCodeLine{94                     \textcolor{keywordflow}{return} i;}
+\DoxyCodeLine{95             \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{96         \}}
+\DoxyCodeLine{97     \textcolor{keyword}{public}:}
+\DoxyCodeLine{98         \textcolor{comment}{// конструкторы}}
+\DoxyCodeLine{99         \mbox{\hyperlink{class_pattern_1_1_table}{Table}}(): current\_size(0), elements(\textcolor{keyword}{new} \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}}[QUOTA]), max\_size(QUOTA) \{\}; \textcolor{comment}{// пустой}}
+\DoxyCodeLine{100         \mbox{\hyperlink{class_pattern_1_1_table}{Table}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_pattern_1_1_table}{Table<IND, INF>}} \&vector2): current\_size(vector2.current\_size), max\_size(vector2.max\_size) \textcolor{comment}{// копирующий консруктор}}
+\DoxyCodeLine{101         \{}
+\DoxyCodeLine{102             elements = \textcolor{keyword}{new} \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}}[current\_size];}
+\DoxyCodeLine{103             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < current\_size; i++)}
+\DoxyCodeLine{104                 elements[i] = vector2.elements[i];}
+\DoxyCodeLine{105         \}}
+\DoxyCodeLine{106         \mbox{\hyperlink{class_pattern_1_1_table}{Table}}(\mbox{\hyperlink{class_pattern_1_1_table}{Table<IND, INF>}} \&\&vector2): current\_size(vector2.current\_size), max\_size(vector2.max\_size), elements(vector2.elements)\{ \textcolor{comment}{// перемещающий конструктор}}
+\DoxyCodeLine{107             vector2.elements = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{108         \}}
+\DoxyCodeLine{109         \textcolor{comment}{// деструктор}}
+\DoxyCodeLine{110         \mbox{\hyperlink{class_pattern_1_1_table}{\string~Table}}() \{\textcolor{keyword}{delete} [] elements;\}}
+\DoxyCodeLine{111         \textcolor{comment}{// операторы присваивания}}
+\DoxyCodeLine{112         \mbox{\hyperlink{class_pattern_1_1_table}{Table<IND, INF>}} \&operator =(\textcolor{keyword}{const} \mbox{\hyperlink{class_pattern_1_1_table}{Table<IND, INF>}} \&st)\{}
+\DoxyCodeLine{113             \textcolor{keywordflow}{if} (\textcolor{keyword}{this} != \&st)\{}
+\DoxyCodeLine{114                 current\_size = st.current\_size;}
+\DoxyCodeLine{115                 max\_size = st.max\_size;}
+\DoxyCodeLine{116                 \textcolor{keyword}{delete}[] elements;}
+\DoxyCodeLine{117                 elements = \textcolor{keyword}{new} \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}}[max\_size];}
+\DoxyCodeLine{118                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < current\_size; ++i)}
+\DoxyCodeLine{119                     elements[i] = st.vector[i];}
+\DoxyCodeLine{120             \}}
+\DoxyCodeLine{121             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{122         \}}
+\DoxyCodeLine{123         \mbox{\hyperlink{class_pattern_1_1_table}{Table<IND, INF>}} \&operator =(\mbox{\hyperlink{class_pattern_1_1_table}{Table<IND, INF>}} \&\&st)}
+\DoxyCodeLine{124         \{}
+\DoxyCodeLine{125             \textcolor{keywordtype}{int} tmp = current\_size;}
+\DoxyCodeLine{126             current\_size = st.current\_size;}
+\DoxyCodeLine{127             st.current\_size = tmp;}
+\DoxyCodeLine{128             tmp = max\_size;}
+\DoxyCodeLine{129             max\_size = st.max\_size;}
+\DoxyCodeLine{130             st.max\_size = tmp;}
+\DoxyCodeLine{131             \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<IND, INF>}} *ptr = elements;}
+\DoxyCodeLine{132             elements = st.elements;}
+\DoxyCodeLine{133             st.elements = ptr;}
+\DoxyCodeLine{134             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{135         \}}
+\DoxyCodeLine{136         \textcolor{comment}{// операторы индексирования}}
+\DoxyCodeLine{137         INF \&operator[](IND \&s) \textcolor{comment}{// l-\/value}}
+\DoxyCodeLine{138         \{}
+\DoxyCodeLine{139             \textcolor{keyword}{const} \textcolor{keywordtype}{char} *error = \textcolor{stringliteral}{"{}No such element"{}};}
+\DoxyCodeLine{140             \textcolor{keywordtype}{int} i = get\_pos(s);}
+\DoxyCodeLine{141             \textcolor{keywordflow}{if} (i < 0) \textcolor{keywordflow}{throw} error;}
+\DoxyCodeLine{142             \textcolor{keywordflow}{else} \textcolor{keywordflow}{return} elements[i].info;}
+\DoxyCodeLine{143         \}}
+\DoxyCodeLine{144         \textcolor{keyword}{const} INF \&operator[](\textcolor{keyword}{const} IND \&s) \textcolor{keyword}{const} \textcolor{comment}{// r-\/value}}
+\DoxyCodeLine{145         \{}
+\DoxyCodeLine{146             \textcolor{keywordtype}{int} i = get\_pos(s);}
+\DoxyCodeLine{147             \textcolor{keywordflow}{if} (i < 0)}
+\DoxyCodeLine{148             \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"{}No such element"{}};}
+\DoxyCodeLine{149             \textcolor{keywordflow}{return} elements[i].info;}
+\DoxyCodeLine{150         \}}
+\DoxyCodeLine{151         \textcolor{comment}{// вывод}}
+\DoxyCodeLine{152         \textcolor{keyword}{template} <\textcolor{keyword}{class} Id, \textcolor{keyword}{class} If>}
+\DoxyCodeLine{153         \textcolor{keyword}{friend} std::ostream \& operator <<(std::ostream \&s, \textcolor{keyword}{const} \mbox{\hyperlink{class_pattern_1_1_table}{Table<Id,If>}} \&tab)\{}
+\DoxyCodeLine{154             Table<std::string, Info>::Iterator it;}
+\DoxyCodeLine{155             \textcolor{keywordflow}{for} (it = tab.begin();it != tab.end(); ++it)}
+\DoxyCodeLine{156                 s << (*it).index << \textcolor{stringliteral}{"{} -\/ "{}} << it-\/>info << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{157             \textcolor{keywordflow}{return} s;}
+\DoxyCodeLine{158         \}}
+\DoxyCodeLine{159         \textcolor{comment}{// объявления для итератора}}
+\DoxyCodeLine{160         \textcolor{keyword}{typedef} Iterator<IND, INF> Iterator;}
+\DoxyCodeLine{161         \textcolor{comment}{// методы итератора}}
+\DoxyCodeLine{162         Iterator begin()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} Iterator(this-\/>elements);\}}
+\DoxyCodeLine{163         Iterator end()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} Iterator(this-\/>elements + current\_size);\}}
+\DoxyCodeLine{164         Iterator find(\textcolor{keyword}{const} IND \&s)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{165             \textcolor{keywordtype}{int} i = get\_pos(s);}
+\DoxyCodeLine{166             \textcolor{keywordflow}{if}(i < 0)}
+\DoxyCodeLine{167                 i = current\_size;}
+\DoxyCodeLine{168             \textcolor{keywordflow}{return} Iterator(this-\/>elements + i);}
+\DoxyCodeLine{169         \}}
+\DoxyCodeLine{170         \textcolor{comment}{// методы таблицы}}
+\DoxyCodeLine{171         \textcolor{keywordtype}{int} get\_count()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} current\_size; \};}
+\DoxyCodeLine{172         \textcolor{keywordtype}{void} del\_ship(\textcolor{keyword}{const} std::string \&name)\{}
+\DoxyCodeLine{173             \textcolor{comment}{//Table<std::string, struct Info>::Iterator it;}}
+\DoxyCodeLine{174             \textcolor{keywordtype}{int} i = get\_pos(name);}
+\DoxyCodeLine{175             \textcolor{keywordflow}{if} (i < 0) \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"{}No such element"{}};}
+\DoxyCodeLine{176             \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{177                 \textcolor{keyword}{delete} \&(elements[i]);}
+\DoxyCodeLine{178                 elements[i] = elements[current\_size-\/1];}
+\DoxyCodeLine{179                 current\_size -\/=1;}
+\DoxyCodeLine{180             \}}
+\DoxyCodeLine{181         \}}
+\DoxyCodeLine{182         \textcolor{keywordtype}{void} add\_ship(\mbox{\hyperlink{class_ships_1_1_ship}{Ships::Ship}} *new\_ship, \mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic::Coordinate}} coordinates)\{}
+\DoxyCodeLine{183             \textcolor{keyword}{typedef} \mbox{\hyperlink{struct_pattern_1_1_table__element}{Table\_element<std::string, struct Info>}}  Tab\_elem;}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185             \mbox{\hyperlink{class_pattern_1_1_info}{Info}} new\_info= \{new\_ship, coordinates\}; \textcolor{comment}{//}}
+\DoxyCodeLine{186             Tab\_elem new\_elem = \{new\_ship-\/>\mbox{\hyperlink{class_ships_1_1_ship_a584cc6dde25bf62b22d439293d38dd95}{get\_name}}(), new\_info\};\textcolor{comment}{//}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188             \textcolor{keywordflow}{if} (current\_size == max\_size) \{}
+\DoxyCodeLine{189                 max\_size += QUOTA;}
+\DoxyCodeLine{190                 Tab\_elem *old = elements;}
+\DoxyCodeLine{191                 elements = \textcolor{keyword}{new} Tab\_elem [max\_size];}
+\DoxyCodeLine{192                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < current\_size; i ++) elements[i] = old[i];}
+\DoxyCodeLine{193                 \textcolor{keyword}{delete} [] old;}
+\DoxyCodeLine{194             \}}
+\DoxyCodeLine{195             elements[current\_size] = new\_elem;}
+\DoxyCodeLine{196             current\_size += 1;}
+\DoxyCodeLine{197         \}}
+\DoxyCodeLine{198         \mbox{\hyperlink{class_ships_1_1_ship}{Ships::Ship}} *description\_ship(\textcolor{keyword}{const} std::string  \&name)\{}
+\DoxyCodeLine{199             \textcolor{keyword}{struct }\mbox{\hyperlink{class_pattern_1_1_info}{Info}} get\_info = (*this)[name];}
+\DoxyCodeLine{200             \textcolor{keywordflow}{return} get\_info.ship;}
+\DoxyCodeLine{201         \}}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203     \};}
+\DoxyCodeLine{204      \textcolor{comment}{/*}}
+\DoxyCodeLine{205 \textcolor{comment}{       Table <std::string, struct Info> a;}}
+\DoxyCodeLine{206 \textcolor{comment}{       Ships::Transport\_ship *transport = new Ships::Transport\_ship();}}
+\DoxyCodeLine{207 \textcolor{comment}{       Ships::Ship ship = *transport;}}
+\DoxyCodeLine{208 \textcolor{comment}{       Ships::Transport\_ship *tmp = dynamic\_cast<Ships::Transport\_ship *>(\&ship); */}}
+\DoxyCodeLine{209 \}}
+\DoxyCodeLine{210 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//LAB4\_3SEM\_TABLE\_H}}
+
+\end{DoxyCode}

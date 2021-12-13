@@ -1,0 +1,170 @@
+\hypertarget{class_ships_1_1_transport__ship}{}\doxysection{Ships\+::Transport\+\_\+ship Class Reference}
+\label{class_ships_1_1_transport__ship}\index{Ships::Transport\_ship@{Ships::Transport\_ship}}
+Inheritance diagram for Ships\+::Transport\+\_\+ship\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_ships_1_1_transport__ship}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ships_1_1_transport__ship_a4bb8a68465db3ff29f542ef5205bf76e}{Transport\+\_\+ship}} ()
+\item 
+\mbox{\hyperlink{class_ships_1_1_transport__ship_a1b5f6ccf2cc99664ff24916e79aa878e}{Transport\+\_\+ship}} (std\+::string new\+\_\+type, std\+::string name, double max\+\_\+velocity, double max\+\_\+life, double cost, double max\+\_\+cargo, double coef\+\_\+decrease)
+\item 
+void \mbox{\hyperlink{class_ships_1_1_transport__ship_aede37d6e1e8cbbb7ea118987b245302e}{set\+\_\+max\+\_\+cargo}} (double new\+\_\+value)
+\item 
+void \mbox{\hyperlink{class_ships_1_1_transport__ship_a96e1e3a4465208dcd418aa9716dd6eee}{set\+\_\+coef\+\_\+decrease}} (double new\+\_\+value)
+\item 
+double \mbox{\hyperlink{class_ships_1_1_transport__ship_afe1ac609e6da5aa6516eed6ce07fc79b}{get\+\_\+info\+\_\+cargo}} (int i) const
+\item 
+int \mbox{\hyperlink{class_ships_1_1_transport__ship_a9006ed23171f9e82147ea62dcd6923a5}{get\+\_\+size}} ()
+\item 
+double \mbox{\hyperlink{class_ships_1_1_transport__ship_a0d542e59a1a40c5a7fdad260343bc84b}{possible\+\_\+speed}} ()
+\item 
+void \mbox{\hyperlink{class_ships_1_1_transport__ship_aa7522e35738c4355fad62d4f84f56222}{set\+\_\+cur\+\_\+speed}} (double new\+\_\+speed)
+\item 
+void \mbox{\hyperlink{class_ships_1_1_transport__ship_aa6791e1642f4a00cf299075f0b952a19}{set\+\_\+cur\+\_\+cargo}} (double add\+\_\+cargo)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{class_ships_1_1_transport__ship_a2def945650297494efe37ae2a4b9b968}{operator$<$$<$}} (std\+::ostream \&s, const \mbox{\hyperlink{class_ships_1_1_transport__ship}{Transport\+\_\+ship}} \&ship)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_a4bb8a68465db3ff29f542ef5205bf76e}\label{class_ships_1_1_transport__ship_a4bb8a68465db3ff29f542ef5205bf76e}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!Transport\_ship@{Transport\_ship}}
+\index{Transport\_ship@{Transport\_ship}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{Transport\_ship()}{Transport\_ship()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Ships\+::\+Transport\+\_\+ship\+::\+Transport\+\_\+ship (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+init constructor \mbox{\Hypertarget{class_ships_1_1_transport__ship_a1b5f6ccf2cc99664ff24916e79aa878e}\label{class_ships_1_1_transport__ship_a1b5f6ccf2cc99664ff24916e79aa878e}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!Transport\_ship@{Transport\_ship}}
+\index{Transport\_ship@{Transport\_ship}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{Transport\_ship()}{Transport\_ship()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Ships\+::\+Transport\+\_\+ship\+::\+Transport\+\_\+ship (\begin{DoxyParamCaption}\item[{std\+::string}]{new\+\_\+type,  }\item[{std\+::string}]{name,  }\item[{double}]{max\+\_\+velocity,  }\item[{double}]{max\+\_\+life,  }\item[{double}]{cost,  }\item[{double}]{max\+\_\+cargo,  }\item[{double}]{coef\+\_\+decrease }\end{DoxyParamCaption})}
+
+constructor 
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+type} & type of ship \\
+\hline
+{\em name} & name of ship \\
+\hline
+{\em max\+\_\+velocity} & maximum velocity \\
+\hline
+{\em max\+\_\+life} & maximum life \\
+\hline
+{\em cost} & cost of ship \\
+\hline
+{\em max\+\_\+cargo} & maximum cargo \\
+\hline
+{\em coef\+\_\+decrease} & coefficient of velocity decrease \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_afe1ac609e6da5aa6516eed6ce07fc79b}\label{class_ships_1_1_transport__ship_afe1ac609e6da5aa6516eed6ce07fc79b}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!get\_info\_cargo@{get\_info\_cargo}}
+\index{get\_info\_cargo@{get\_info\_cargo}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{get\_info\_cargo()}{get\_info\_cargo()}}
+{\footnotesize\ttfamily double Ships\+::\+Transport\+\_\+ship\+::get\+\_\+info\+\_\+cargo (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption}) const}
+
+get information about cargo 
+\begin{DoxyParams}{Parameters}
+{\em i} & number of property \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+max cargo, cur cargo, coefficient of decrease 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_a9006ed23171f9e82147ea62dcd6923a5}\label{class_ships_1_1_transport__ship_a9006ed23171f9e82147ea62dcd6923a5}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!get\_size@{get\_size}}
+\index{get\_size@{get\_size}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{get\_size()}{get\_size()}}
+{\footnotesize\ttfamily int Ships\+::\+Transport\+\_\+ship\+::get\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+get count of properties of cargo \begin{DoxyReturn}{Returns}
+count of cargo\textquotesingle{}s properties 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_a0d542e59a1a40c5a7fdad260343bc84b}\label{class_ships_1_1_transport__ship_a0d542e59a1a40c5a7fdad260343bc84b}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!possible\_speed@{possible\_speed}}
+\index{possible\_speed@{possible\_speed}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{possible\_speed()}{possible\_speed()}}
+{\footnotesize\ttfamily double Ships\+::\+Transport\+\_\+ship\+::possible\+\_\+speed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+maximum possible speed at the current loading of the ship \begin{DoxyReturn}{Returns}
+maximum possible speed at the current loading of the ship 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_a96e1e3a4465208dcd418aa9716dd6eee}\label{class_ships_1_1_transport__ship_a96e1e3a4465208dcd418aa9716dd6eee}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!set\_coef\_decrease@{set\_coef\_decrease}}
+\index{set\_coef\_decrease@{set\_coef\_decrease}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{set\_coef\_decrease()}{set\_coef\_decrease()}}
+{\footnotesize\ttfamily void Ships\+::\+Transport\+\_\+ship\+::set\+\_\+coef\+\_\+decrease (\begin{DoxyParamCaption}\item[{double}]{new\+\_\+value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+set coefficient of velocity decrease 
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+value} & new coefficient of velocity decrease \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_aa6791e1642f4a00cf299075f0b952a19}\label{class_ships_1_1_transport__ship_aa6791e1642f4a00cf299075f0b952a19}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!set\_cur\_cargo@{set\_cur\_cargo}}
+\index{set\_cur\_cargo@{set\_cur\_cargo}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{set\_cur\_cargo()}{set\_cur\_cargo()}}
+{\footnotesize\ttfamily void Ships\+::\+Transport\+\_\+ship\+::set\+\_\+cur\+\_\+cargo (\begin{DoxyParamCaption}\item[{double}]{add\+\_\+cargo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+cet current cargo 
+\begin{DoxyParams}{Parameters}
+{\em add\+\_\+cargo} & added cargo \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_aa7522e35738c4355fad62d4f84f56222}\label{class_ships_1_1_transport__ship_aa7522e35738c4355fad62d4f84f56222}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!set\_cur\_speed@{set\_cur\_speed}}
+\index{set\_cur\_speed@{set\_cur\_speed}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{set\_cur\_speed()}{set\_cur\_speed()}}
+{\footnotesize\ttfamily void Ships\+::\+Transport\+\_\+ship\+::set\+\_\+cur\+\_\+speed (\begin{DoxyParamCaption}\item[{double}]{new\+\_\+speed }\end{DoxyParamCaption})}
+
+set current speed 
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+speed} & new speed of ship \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_aede37d6e1e8cbbb7ea118987b245302e}\label{class_ships_1_1_transport__ship_aede37d6e1e8cbbb7ea118987b245302e}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!set\_max\_cargo@{set\_max\_cargo}}
+\index{set\_max\_cargo@{set\_max\_cargo}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{set\_max\_cargo()}{set\_max\_cargo()}}
+{\footnotesize\ttfamily void Ships\+::\+Transport\+\_\+ship\+::set\+\_\+max\+\_\+cargo (\begin{DoxyParamCaption}\item[{double}]{new\+\_\+value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+set maximum cargo 
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+value} & new value of maximum cargo \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_ships_1_1_transport__ship_a2def945650297494efe37ae2a4b9b968}\label{class_ships_1_1_transport__ship_a2def945650297494efe37ae2a4b9b968}} 
+\index{Ships::Transport\_ship@{Ships::Transport\_ship}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Ships::Transport\_ship@{Ships::Transport\_ship}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{s,  }\item[{const \mbox{\hyperlink{class_ships_1_1_transport__ship}{Transport\+\_\+ship}} \&}]{ship }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+overload \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} for class Transport ship 
+\begin{DoxyParams}{Parameters}
+{\em s} & ostream \\
+\hline
+{\em ship} & current ship \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ostream 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Ship.\+h\item 
+Ship.\+cpp\end{DoxyCompactItemize}

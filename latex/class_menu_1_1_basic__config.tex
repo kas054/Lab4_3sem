@@ -1,0 +1,92 @@
+\hypertarget{class_menu_1_1_basic__config}{}\doxysection{Menu\+::Basic\+\_\+config Class Reference}
+\label{class_menu_1_1_basic__config}\index{Menu::Basic\_config@{Menu::Basic\_config}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_menu_1_1_basic__config_a4f2eaf04086971485ac6c21423dbd70e}\label{class_menu_1_1_basic__config_a4f2eaf04086971485ac6c21423dbd70e}} 
+void {\bfseries add\+\_\+ship} (\mbox{\hyperlink{class_ships_1_1_ship}{Ships\+::\+Ship}} ship)
+\item 
+FILE $\ast$ \mbox{\hyperlink{class_menu_1_1_basic__config_ac30ee1ceea5db901e3588fec6b4703d6}{load\+\_\+from\+\_\+file}} (std\+::string fname=\char`\"{}\char`\"{})
+\item 
+void \mbox{\hyperlink{class_menu_1_1_basic__config_a2d094ea2806a4d43c37ca92c3f92d527}{load\+\_\+b}} (std\+::string fname, FILE $\ast$fd)
+\item 
+\mbox{\Hypertarget{class_menu_1_1_basic__config_ab391801dc27d1c0add63ec0ad1bd489e}\label{class_menu_1_1_basic__config_ab391801dc27d1c0add63ec0ad1bd489e}} 
+void {\bfseries safe\+\_\+b} (FILE $\ast$fd)
+\item 
+void \mbox{\hyperlink{class_menu_1_1_basic__config_a44a3d174e652231edb1c607dcf822eac}{load\+\_\+basic\+\_\+info\+\_\+ship}} (FILE $\ast$fd, \mbox{\hyperlink{class_ships_1_1_ship}{Ships\+::\+Ship}} $\ast$tmp\+\_\+ship)
+\item 
+void \mbox{\hyperlink{class_menu_1_1_basic__config_a1636328620032e7635d717e36545f268}{load\+\_\+transport\+\_\+ship}} (FILE $\ast$, \mbox{\hyperlink{class_ships_1_1_transport__ship}{Ships\+::\+Transport\+\_\+ship}} $\ast$)
+\item 
+void \mbox{\hyperlink{class_menu_1_1_basic__config_ac042ccf677448d3c3e44586c98c1029d}{safe\+\_\+table}} (FILE $\ast$fd, \mbox{\hyperlink{class_pattern_1_1_table}{Menu\+::\+Table}}$<$ std\+::string, \mbox{\hyperlink{class_pattern_1_1_info}{Menu\+::\+Info}} $>$ $\ast$tab)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_menu_1_1_basic__config_aba31a90bb85b6527433cce3a00671f42}\label{class_menu_1_1_basic__config_aba31a90bb85b6527433cce3a00671f42}} 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{class_ships_1_1_ship}{Ships\+::\+Ship}} $>$ {\bfseries ship}
+\item 
+\mbox{\Hypertarget{class_menu_1_1_basic__config_a1f9369bac6b001de2ec3651442ba9b98}\label{class_menu_1_1_basic__config_a1f9369bac6b001de2ec3651442ba9b98}} 
+std\+::vector$<$ \mbox{\hyperlink{class_basic_1_1_armament}{Basic\+::\+Armament}} $>$ {\bfseries armament}
+\item 
+\mbox{\Hypertarget{class_menu_1_1_basic__config_a6c5a2ae5d3b9d62862a3767412475e16}\label{class_menu_1_1_basic__config_a6c5a2ae5d3b9d62862a3767412475e16}} 
+std\+::vector$<$ \mbox{\hyperlink{struct_basic_1_1_capitan}{Basic\+::\+Capitan}} $>$ {\bfseries capitan}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_menu_1_1_basic__config_a2d094ea2806a4d43c37ca92c3f92d527}\label{class_menu_1_1_basic__config_a2d094ea2806a4d43c37ca92c3f92d527}} 
+\index{Menu::Basic\_config@{Menu::Basic\_config}!load\_b@{load\_b}}
+\index{load\_b@{load\_b}!Menu::Basic\_config@{Menu::Basic\_config}}
+\doxysubsubsection{\texorpdfstring{load\_b()}{load\_b()}}
+{\footnotesize\ttfamily void Menu\+::\+Basic\+\_\+config\+::load\+\_\+b (\begin{DoxyParamCaption}\item[{std\+::string}]{fname,  }\item[{FILE $\ast$}]{fd }\end{DoxyParamCaption})}
+
+load basic configurations \mbox{\Hypertarget{class_menu_1_1_basic__config_a44a3d174e652231edb1c607dcf822eac}\label{class_menu_1_1_basic__config_a44a3d174e652231edb1c607dcf822eac}} 
+\index{Menu::Basic\_config@{Menu::Basic\_config}!load\_basic\_info\_ship@{load\_basic\_info\_ship}}
+\index{load\_basic\_info\_ship@{load\_basic\_info\_ship}!Menu::Basic\_config@{Menu::Basic\_config}}
+\doxysubsubsection{\texorpdfstring{load\_basic\_info\_ship()}{load\_basic\_info\_ship()}}
+{\footnotesize\ttfamily void Menu\+::\+Basic\+\_\+config\+::load\+\_\+basic\+\_\+info\+\_\+ship (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{fd,  }\item[{\mbox{\hyperlink{class_ships_1_1_ship}{Ships\+::\+Ship}} $\ast$}]{tmp\+\_\+ship }\end{DoxyParamCaption})}
+
+load information about ship 
+\begin{DoxyParams}{Parameters}
+{\em fd} & File name \\
+\hline
+{\em tmp\+\_\+ship} & current ship \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_menu_1_1_basic__config_ac30ee1ceea5db901e3588fec6b4703d6}\label{class_menu_1_1_basic__config_ac30ee1ceea5db901e3588fec6b4703d6}} 
+\index{Menu::Basic\_config@{Menu::Basic\_config}!load\_from\_file@{load\_from\_file}}
+\index{load\_from\_file@{load\_from\_file}!Menu::Basic\_config@{Menu::Basic\_config}}
+\doxysubsubsection{\texorpdfstring{load\_from\_file()}{load\_from\_file()}}
+{\footnotesize\ttfamily FILE $\ast$ Menu\+::\+Basic\+\_\+config\+::load\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{std\+::string}]{fname = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+open file or create new 
+\begin{DoxyParams}{Parameters}
+{\em fname} & file name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+file pointer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_menu_1_1_basic__config_a1636328620032e7635d717e36545f268}\label{class_menu_1_1_basic__config_a1636328620032e7635d717e36545f268}} 
+\index{Menu::Basic\_config@{Menu::Basic\_config}!load\_transport\_ship@{load\_transport\_ship}}
+\index{load\_transport\_ship@{load\_transport\_ship}!Menu::Basic\_config@{Menu::Basic\_config}}
+\doxysubsubsection{\texorpdfstring{load\_transport\_ship()}{load\_transport\_ship()}}
+{\footnotesize\ttfamily void Menu\+::\+Basic\+\_\+config\+::load\+\_\+transport\+\_\+ship (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{fd,  }\item[{\mbox{\hyperlink{class_ships_1_1_transport__ship}{Ships\+::\+Transport\+\_\+ship}} $\ast$}]{tmp\+\_\+ship }\end{DoxyParamCaption})}
+
+load information about cargo \mbox{\Hypertarget{class_menu_1_1_basic__config_ac042ccf677448d3c3e44586c98c1029d}\label{class_menu_1_1_basic__config_ac042ccf677448d3c3e44586c98c1029d}} 
+\index{Menu::Basic\_config@{Menu::Basic\_config}!safe\_table@{safe\_table}}
+\index{safe\_table@{safe\_table}!Menu::Basic\_config@{Menu::Basic\_config}}
+\doxysubsubsection{\texorpdfstring{safe\_table()}{safe\_table()}}
+{\footnotesize\ttfamily void Menu\+::\+Basic\+\_\+config\+::safe\+\_\+table (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{fd,  }\item[{\mbox{\hyperlink{class_pattern_1_1_table}{Menu\+::\+Table}}$<$ std\+::string, \mbox{\hyperlink{class_pattern_1_1_info}{Menu\+::\+Info}} $>$ $\ast$}]{tab }\end{DoxyParamCaption})}
+
+save mission 
+\begin{DoxyParams}{Parameters}
+{\em fd} & file name \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Mission.\+h\item 
+Basic\+\_\+config.\+cpp\end{DoxyCompactItemize}

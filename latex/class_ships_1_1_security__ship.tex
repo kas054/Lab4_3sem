@@ -1,0 +1,245 @@
+\hypertarget{class_ships_1_1_security__ship}{}\doxysection{Ships\+::Security\+\_\+ship Class Reference}
+\label{class_ships_1_1_security__ship}\index{Ships::Security\_ship@{Ships::Security\_ship}}
+Inheritance diagram for Ships\+::Security\+\_\+ship\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_ships_1_1_security__ship}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ships_1_1_security__ship_ae63028e1989f773a77b4a0b86a1dea28}{Security\+\_\+ship}} ()
+\item 
+\mbox{\hyperlink{class_ships_1_1_security__ship_aacdef4b9abc2779a32d55e718691433b}{$\sim$\+Security\+\_\+ship}} ()
+\item 
+\mbox{\hyperlink{class_ships_1_1_security__ship_a25849ec963fa00501c27f4b5875e69b5}{Security\+\_\+ship}} (std\+::string new\+\_\+type, std\+::string name, double max\+\_\+velocity, double max\+\_\+life, double cost)
+\item 
+void \mbox{\hyperlink{class_ships_1_1_security__ship_a1f05c0b9949534ca27765e758cad4356}{add\+\_\+armament}} (\mbox{\hyperlink{class_basic_1_1_armament}{Basic\+::\+Armament}} $\ast$new\+\_\+armament, int place)
+\item 
+void \mbox{\hyperlink{class_ships_1_1_security__ship_acb8dcab029a4903e569902e81a9e36d1}{remove\+\_\+armament}} (int place)
+\item 
+void \mbox{\hyperlink{class_ships_1_1_security__ship_a9ebd13f4dfead0c928342abb58f6d5d6}{change\+\_\+armament}} (int i, int property, double new\+\_\+value, std\+::string type=\char`\"{}\char`\"{})
+\item 
+\mbox{\hyperlink{class_basic_1_1_armament}{Basic\+::\+Armament}} $\ast$ \mbox{\hyperlink{class_ships_1_1_security__ship_ad434177f160341c01796282618475ba0}{get\+\_\+info\+\_\+armament}} (int i) const
+\item 
+void \mbox{\hyperlink{class_ships_1_1_security__ship_a4f3d70dbadcaedd6c7ca5e1aa4af7d33}{change\+\_\+place}} (int old\+\_\+place, int new\+\_\+place)
+\item 
+double \mbox{\hyperlink{class_ships_1_1_security__ship_a6309a1dc25f0350135d441c3bd3c6107}{shoot}} (\mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic\+::\+Coordinate}} cur\+\_\+coord, \mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic\+::\+Coordinate}} pirate)
+\item 
+void \mbox{\hyperlink{class_ships_1_1_security__ship_a3d0d628a400831064bf325c310cbcbbd}{change\+\_\+status}} ()
+\item 
+void \mbox{\hyperlink{class_ships_1_1_security__ship_a86b9fce84f46f0d64ab78c4c8c9abeb9}{armament\+\_\+exchange}} (int first, int second)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{class_ships_1_1_security__ship_a8a33d858d6cce33698ec7455124f2f47}{operator$<$$<$}} (std\+::ostream \&s, const \mbox{\hyperlink{class_ships_1_1_security__ship}{Security\+\_\+ship}} \&ship)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_ae63028e1989f773a77b4a0b86a1dea28}\label{class_ships_1_1_security__ship_ae63028e1989f773a77b4a0b86a1dea28}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!Security\_ship@{Security\_ship}}
+\index{Security\_ship@{Security\_ship}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{Security\_ship()}{Security\_ship()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Ships\+::\+Security\+\_\+ship\+::\+Security\+\_\+ship (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+init constructor \mbox{\Hypertarget{class_ships_1_1_security__ship_aacdef4b9abc2779a32d55e718691433b}\label{class_ships_1_1_security__ship_aacdef4b9abc2779a32d55e718691433b}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!````~Security\_ship@{$\sim$Security\_ship}}
+\index{````~Security\_ship@{$\sim$Security\_ship}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{$\sim$Security\_ship()}{~Security\_ship()}}
+{\footnotesize\ttfamily Ships\+::\+Security\+\_\+ship\+::$\sim$\+Security\+\_\+ship (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+destructor \mbox{\Hypertarget{class_ships_1_1_security__ship_a25849ec963fa00501c27f4b5875e69b5}\label{class_ships_1_1_security__ship_a25849ec963fa00501c27f4b5875e69b5}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!Security\_ship@{Security\_ship}}
+\index{Security\_ship@{Security\_ship}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{Security\_ship()}{Security\_ship()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Ships\+::\+Security\+\_\+ship\+::\+Security\+\_\+ship (\begin{DoxyParamCaption}\item[{std\+::string}]{new\+\_\+type,  }\item[{std\+::string}]{name,  }\item[{double}]{max\+\_\+velocity,  }\item[{double}]{max\+\_\+life,  }\item[{double}]{cost }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+constructor 
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+type} & type of ship \\
+\hline
+{\em name} & name of ship \\
+\hline
+{\em max\+\_\+velocity} & maximum velocity \\
+\hline
+{\em max\+\_\+life} & maximum life \\
+\hline
+{\em cost} & cost of ship \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_a1f05c0b9949534ca27765e758cad4356}\label{class_ships_1_1_security__ship_a1f05c0b9949534ca27765e758cad4356}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!add\_armament@{add\_armament}}
+\index{add\_armament@{add\_armament}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{add\_armament()}{add\_armament()}}
+{\footnotesize\ttfamily void Ships\+::\+Security\+\_\+ship\+::add\+\_\+armament (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_basic_1_1_armament}{Basic\+::\+Armament}} $\ast$}]{new\+\_\+armament,  }\item[{int}]{place }\end{DoxyParamCaption})}
+
+add armament to a ship 
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+armament} & added armament \\
+\hline
+{\em place} & location of weapons on the ship \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em This place is not free} & \\
+\hline
+{\em No such place} & \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_a86b9fce84f46f0d64ab78c4c8c9abeb9}\label{class_ships_1_1_security__ship_a86b9fce84f46f0d64ab78c4c8c9abeb9}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!armament\_exchange@{armament\_exchange}}
+\index{armament\_exchange@{armament\_exchange}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{armament\_exchange()}{armament\_exchange()}}
+{\footnotesize\ttfamily void Ships\+::\+Security\+\_\+ship\+::armament\+\_\+exchange (\begin{DoxyParamCaption}\item[{int}]{first,  }\item[{int}]{second }\end{DoxyParamCaption})}
+
+change place between two armaments 
+\begin{DoxyParams}{Parameters}
+{\em first} & first armament \\
+\hline
+{\em second} & second armament \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Invalid place for old place} & \\
+\hline
+{\em Invalid place for new place} & \\
+\hline
+{\em No armament in this place} & \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_a9ebd13f4dfead0c928342abb58f6d5d6}\label{class_ships_1_1_security__ship_a9ebd13f4dfead0c928342abb58f6d5d6}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!change\_armament@{change\_armament}}
+\index{change\_armament@{change\_armament}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{change\_armament()}{change\_armament()}}
+{\footnotesize\ttfamily void Ships\+::\+Security\+\_\+ship\+::change\+\_\+armament (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{property,  }\item[{double}]{new\+\_\+value,  }\item[{std\+::string}]{type = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+change armament on a ship 
+\begin{DoxyParams}{Parameters}
+{\em i} & armament\textquotesingle{}s index in the list \\
+\hline
+{\em property} & changing property of armament \\
+\hline
+{\em new\+\_\+value} & new value of property \\
+\hline
+{\em type} & new type of armament \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Invalid place for armament} & @thro \char`\"{}\+No such place\char`\"{} \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_a4f3d70dbadcaedd6c7ca5e1aa4af7d33}\label{class_ships_1_1_security__ship_a4f3d70dbadcaedd6c7ca5e1aa4af7d33}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!change\_place@{change\_place}}
+\index{change\_place@{change\_place}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{change\_place()}{change\_place()}}
+{\footnotesize\ttfamily void Ships\+::\+Security\+\_\+ship\+::change\+\_\+place (\begin{DoxyParamCaption}\item[{int}]{old\+\_\+place,  }\item[{int}]{new\+\_\+place }\end{DoxyParamCaption})}
+
+change place of armament 
+\begin{DoxyParams}{Parameters}
+{\em old\+\_\+place} & current place of armament \\
+\hline
+{\em new\+\_\+place} & new place of armament \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Invalid place for old place} & \\
+\hline
+{\em Invalid place for new place} & \\
+\hline
+{\em No armament in this place} & \\
+\hline
+{\em This place is not free} & \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_a3d0d628a400831064bf325c310cbcbbd}\label{class_ships_1_1_security__ship_a3d0d628a400831064bf325c310cbcbbd}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!change\_status@{change\_status}}
+\index{change\_status@{change\_status}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{change\_status()}{change\_status()}}
+{\footnotesize\ttfamily void Ships\+::\+Security\+\_\+ship\+::change\+\_\+status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+change status of armaments \mbox{\Hypertarget{class_ships_1_1_security__ship_ad434177f160341c01796282618475ba0}\label{class_ships_1_1_security__ship_ad434177f160341c01796282618475ba0}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!get\_info\_armament@{get\_info\_armament}}
+\index{get\_info\_armament@{get\_info\_armament}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{get\_info\_armament()}{get\_info\_armament()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_basic_1_1_armament}{Basic\+::\+Armament}} $\ast$ Ships\+::\+Security\+\_\+ship\+::get\+\_\+info\+\_\+armament (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption}) const}
+
+get information about armament 
+\begin{DoxyParams}{Parameters}
+{\em i} & armament\textquotesingle{}s index in the list \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+armament 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Invalid place for armament} & \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_acb8dcab029a4903e569902e81a9e36d1}\label{class_ships_1_1_security__ship_acb8dcab029a4903e569902e81a9e36d1}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!remove\_armament@{remove\_armament}}
+\index{remove\_armament@{remove\_armament}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{remove\_armament()}{remove\_armament()}}
+{\footnotesize\ttfamily void Ships\+::\+Security\+\_\+ship\+::remove\+\_\+armament (\begin{DoxyParamCaption}\item[{int}]{place }\end{DoxyParamCaption})}
+
+remove armament from a ship 
+\begin{DoxyParams}{Parameters}
+{\em place} & location of weapons on the ship \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No such place} & \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_a6309a1dc25f0350135d441c3bd3c6107}\label{class_ships_1_1_security__ship_a6309a1dc25f0350135d441c3bd3c6107}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!shoot@{shoot}}
+\index{shoot@{shoot}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{shoot()}{shoot()}}
+{\footnotesize\ttfamily double Ships\+::\+Security\+\_\+ship\+::shoot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic\+::\+Coordinate}}}]{cur\+\_\+coord,  }\item[{\mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic\+::\+Coordinate}}}]{pirate }\end{DoxyParamCaption})}
+
+make a shoot 
+\begin{DoxyParams}{Parameters}
+{\em cur\+\_\+coord} & current coordinates of this ship \\
+\hline
+{\em pirate} & coordinates of pirates \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+total damage from all armaments 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_ships_1_1_security__ship_a8a33d858d6cce33698ec7455124f2f47}\label{class_ships_1_1_security__ship_a8a33d858d6cce33698ec7455124f2f47}} 
+\index{Ships::Security\_ship@{Ships::Security\_ship}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Ships::Security\_ship@{Ships::Security\_ship}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{s,  }\item[{const \mbox{\hyperlink{class_ships_1_1_security__ship}{Security\+\_\+ship}} \&}]{ship }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+overloaded \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} for class \mbox{\hyperlink{class_ships_1_1_security__ship}{Security\+\_\+ship}} 
+\begin{DoxyParams}{Parameters}
+{\em s} & ostream \\
+\hline
+{\em ship} & Security ship \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ostream 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Ship.\+h\item 
+Ship.\+cpp\end{DoxyCompactItemize}

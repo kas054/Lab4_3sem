@@ -1,0 +1,124 @@
+\hypertarget{_ship_8h_source}{}\doxysection{Ship.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by PC on 08.11.2021.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef LAB4\_3SEM\_SHIP\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define LAB4\_3SEM\_SHIP\_H}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}Armament.h"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }Ships \{}
+\DoxyCodeLine{12     \textcolor{keyword}{class }\mbox{\hyperlink{class_ships_1_1_ship}{Ship}} \{}
+\DoxyCodeLine{13     \textcolor{keyword}{private}:}
+\DoxyCodeLine{14         std::string ship\_type;}
+\DoxyCodeLine{15         std::string name;}
+\DoxyCodeLine{16         \mbox{\hyperlink{struct_basic_1_1_capitan}{Basic::Capitan}} capitan;}
+\DoxyCodeLine{17         \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} properties\_count = 5;}
+\DoxyCodeLine{18         \textcolor{keywordtype}{double} properties[properties\_count] = \{0\}; \textcolor{comment}{// max\_velocity -\/ 0, cur\_velocity -\/ 1, max\_life -\/ 2, cur\_life -\/ 3, cost -\/ 4}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keyword}{public}:}
+\DoxyCodeLine{24         \mbox{\hyperlink{class_ships_1_1_ship_a0c1383183a36233d83c318d0d5cf9b8d}{Ship}}(): ship\_type(\textcolor{stringliteral}{"{}"{}}), name(\textcolor{stringliteral}{"{}"{}}) \{\};}
+\DoxyCodeLine{31         \mbox{\hyperlink{class_ships_1_1_ship_a0c1383183a36233d83c318d0d5cf9b8d}{Ship}}(std::string new\_type, std::string name,}
+\DoxyCodeLine{32              \textcolor{keywordtype}{double} max\_velocity, \textcolor{keywordtype}{double} max\_life, \textcolor{keywordtype}{double} cost);}
+\DoxyCodeLine{36         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_ships_1_1_ship_acdeafe58be4af38ee3e4f5781ef3bfa1}{\string~Ship}}() \{\};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{44         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_ships_1_1_ship_adf86655ac80cbd443063805510a189dd}{get\_property}}(\textcolor{keywordtype}{int} i) \textcolor{keyword}{const};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{51         \textcolor{keyword}{const} \mbox{\hyperlink{struct_basic_1_1_capitan}{Basic::Capitan}} \mbox{\hyperlink{class_ships_1_1_ship_ab9c2b679db386920add328c696e1f3ae}{get\_capitan}}()\textcolor{keyword}{ const }\{\textcolor{keywordflow}{return} capitan;\}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{58         \textcolor{keywordtype}{int} \mbox{\hyperlink{class_ships_1_1_ship_af11315a48401a563c6192e24f8aaf924}{count\_properties}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} properties\_count; \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{65         std::string \mbox{\hyperlink{class_ships_1_1_ship_a4d3fdfea05caba6fff66595b68f4a954}{get\_type}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} ship\_type; \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{72         std::string \mbox{\hyperlink{class_ships_1_1_ship_a584cc6dde25bf62b22d439293d38dd95}{get\_name}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} name; \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{80         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_ship_ab2b5e7930be14937a1c9164cbbc4b19d}{change\_property}}(\textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} new\_value)  \{ \textcolor{keywordflow}{if} (i < properties\_count  \&\& i >= 0) properties[i] = new\_value; \}}
+\DoxyCodeLine{86         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_ship_a9bea7cea612f8cc438a8e2344ac9e89a}{change\_type}}(std::string new\_type) \{ ship\_type = std::move(new\_type); \}}
+\DoxyCodeLine{92         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_ship_a3cf0a51341ee802419e52b4f2f765d68}{change\_cap}}(\mbox{\hyperlink{struct_basic_1_1_capitan}{Basic::Capitan}} new\_cap) \{capitan = new\_cap;\}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{99         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_ship_af9e7c292d43056e9db20348c888eae3f}{change\_name}}(std::string new\_name) \{ name = std::move(new\_name); \}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{106         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_ship_af6e39acc54e3ba00d5160291043f9369}{set\_velocity}}(\textcolor{keywordtype}{double} velocity);}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{114         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_ships_1_1_ship_a72fe4bdc88b913b25ff76757315fd173}{get\_damage}}(\textcolor{keywordtype}{double} damage) \{properties[3] -\/= damage; \textcolor{keywordflow}{return} properties[3];\} \textcolor{comment}{//properties[3] -\/ current life}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{120         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_ship_a0cf56df3e560f23c2f4046fae5837bf9}{print\_properties}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{127         \textcolor{keyword}{friend} std::ostream \&\mbox{\hyperlink{class_ships_1_1_ship_a6850f47604f1a48a989a845d2d10cb2d}{operator<<}}(std::ostream \&, \textcolor{keyword}{const} \mbox{\hyperlink{class_ships_1_1_ship}{Ship}} \&);}
+\DoxyCodeLine{128     \};}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130     \textcolor{keyword}{class }\mbox{\hyperlink{class_ships_1_1_transport__ship}{Transport\_ship}}: \textcolor{keyword}{public} \textcolor{keyword}{virtual} \mbox{\hyperlink{class_ships_1_1_ship}{Ship}} \{}
+\DoxyCodeLine{131     \textcolor{keyword}{private}:}
+\DoxyCodeLine{132         \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} size = 3;}
+\DoxyCodeLine{133         \textcolor{keywordtype}{double} cargo[size] = \{0\}; \textcolor{comment}{//max\_cargo -\/ 0, cur\_cargo -\/ 1, coef\_decrease -\/ 2; (from 1\% to 20\%)}}
+\DoxyCodeLine{134     \textcolor{keyword}{public}:}
+\DoxyCodeLine{138         \mbox{\hyperlink{class_ships_1_1_transport__ship_a4bb8a68465db3ff29f542ef5205bf76e}{Transport\_ship}}()\{\}}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{150         \mbox{\hyperlink{class_ships_1_1_transport__ship_a4bb8a68465db3ff29f542ef5205bf76e}{Transport\_ship}}(std::string new\_type, std::string name, \textcolor{keywordtype}{double} max\_velocity,}
+\DoxyCodeLine{151                        \textcolor{keywordtype}{double} max\_life, \textcolor{keywordtype}{double} cost, \textcolor{keywordtype}{double} max\_cargo, \textcolor{keywordtype}{double} coef\_decrease);}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{157         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_transport__ship_aede37d6e1e8cbbb7ea118987b245302e}{set\_max\_cargo}}(\textcolor{keywordtype}{double} new\_value) \{ cargo[0] = new\_value; \}}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{163         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_transport__ship_a96e1e3a4465208dcd418aa9716dd6eee}{set\_coef\_decrease}}(\textcolor{keywordtype}{double} new\_value) \{ cargo[2] = new\_value; \}}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{170         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_ships_1_1_transport__ship_afe1ac609e6da5aa6516eed6ce07fc79b}{get\_info\_cargo}}(\textcolor{keywordtype}{int} i) \textcolor{keyword}{const};}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{176         \textcolor{keywordtype}{int} \mbox{\hyperlink{class_ships_1_1_transport__ship_a9006ed23171f9e82147ea62dcd6923a5}{get\_size}}() \{\textcolor{keywordflow}{return} size;\}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{182         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_ships_1_1_transport__ship_a0d542e59a1a40c5a7fdad260343bc84b}{possible\_speed}}();}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{188         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_transport__ship_aa7522e35738c4355fad62d4f84f56222}{set\_cur\_speed}}(\textcolor{keywordtype}{double} new\_speed);}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{194         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_transport__ship_aa6791e1642f4a00cf299075f0b952a19}{set\_cur\_cargo}}(\textcolor{keywordtype}{double} add\_cargo) \{\textcolor{keywordflow}{if} (add\_cargo <= cargo[0] -\/ cargo[1]) cargo[1] += add\_cargo;\}}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{202         \textcolor{keyword}{friend} std::ostream \&\mbox{\hyperlink{class_ships_1_1_transport__ship_a2def945650297494efe37ae2a4b9b968}{operator<<}}(std::ostream \&s, \textcolor{keyword}{const} \mbox{\hyperlink{class_ships_1_1_transport__ship}{Transport\_ship}} \&ship);}
+\DoxyCodeLine{203     \};}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205     \textcolor{keyword}{class }\mbox{\hyperlink{class_ships_1_1_security__ship}{Security\_ship}}: \textcolor{keyword}{public} \textcolor{keyword}{virtual} \mbox{\hyperlink{class_ships_1_1_ship}{Ship}} \{}
+\DoxyCodeLine{206     \textcolor{keyword}{private}:}
+\DoxyCodeLine{207         \mbox{\hyperlink{class_basic_1_1_armament}{Basic::Armament}} *armaments[4] = \{\textcolor{keyword}{nullptr}\}; \textcolor{comment}{// Расположение орудий: корма -\/ 0, нос -\/ 1, правый борт -\/ 2, левый борт -\/ 3}}
+\DoxyCodeLine{208     \textcolor{keyword}{public}:}
+\DoxyCodeLine{212         \mbox{\hyperlink{class_ships_1_1_security__ship_ae63028e1989f773a77b4a0b86a1dea28}{Security\_ship}}() \{\}}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{217         \mbox{\hyperlink{class_ships_1_1_security__ship_aacdef4b9abc2779a32d55e718691433b}{\string~Security\_ship}}();}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{227         \mbox{\hyperlink{class_ships_1_1_security__ship_a25849ec963fa00501c27f4b5875e69b5}{Security\_ship}}(std::string new\_type, std::string name,\textcolor{keywordtype}{double} max\_velocity, \textcolor{keywordtype}{double} max\_life, \textcolor{keywordtype}{double} cost): \mbox{\hyperlink{class_ships_1_1_ship}{Ship}}(new\_type,name,max\_velocity, max\_life, cost) \{\}}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{236         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_security__ship_a1f05c0b9949534ca27765e758cad4356}{add\_armament}}(\mbox{\hyperlink{class_basic_1_1_armament}{Basic::Armament}} *new\_armament, \textcolor{keywordtype}{int} place);}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{243         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_security__ship_acb8dcab029a4903e569902e81a9e36d1}{remove\_armament}}(\textcolor{keywordtype}{int} place);}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{254         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_security__ship_a9ebd13f4dfead0c928342abb58f6d5d6}{change\_armament}}(\textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} property, \textcolor{keywordtype}{double} new\_value, std::string type = \textcolor{stringliteral}{"{}"{}}); \textcolor{comment}{// номер оружия, свойство оружия, новое значение, тип оружия}}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{263         \mbox{\hyperlink{class_basic_1_1_armament}{Basic::Armament}} *\mbox{\hyperlink{class_ships_1_1_security__ship_ad434177f160341c01796282618475ba0}{get\_info\_armament}}(\textcolor{keywordtype}{int} i) \textcolor{keyword}{const};}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{274         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_security__ship_a4f3d70dbadcaedd6c7ca5e1aa4af7d33}{change\_place}}(\textcolor{keywordtype}{int} old\_place, \textcolor{keywordtype}{int} new\_place);}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{282         \textcolor{keywordtype}{double} \mbox{\hyperlink{class_ships_1_1_security__ship_a6309a1dc25f0350135d441c3bd3c6107}{shoot}}(\mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic::Coordinate}} cur\_coord, \mbox{\hyperlink{struct_basic_1_1_coordinate}{Basic::Coordinate}} pirate); \textcolor{comment}{// return total damage}}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{290         \textcolor{keyword}{friend} std::ostream \&\mbox{\hyperlink{class_ships_1_1_security__ship_a8a33d858d6cce33698ec7455124f2f47}{operator<<}}(std::ostream \&s, \textcolor{keyword}{const} \mbox{\hyperlink{class_ships_1_1_security__ship}{Security\_ship}} \&ship);}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{295         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_security__ship_a3d0d628a400831064bf325c310cbcbbd}{change\_status}}();}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{305         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_ships_1_1_security__ship_a86b9fce84f46f0d64ab78c4c8c9abeb9}{armament\_exchange}}(\textcolor{keywordtype}{int} first, \textcolor{keywordtype}{int} second);}
+\DoxyCodeLine{306     \};}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308     \textcolor{keyword}{class }\mbox{\hyperlink{class_ships_1_1_military__transport__ship}{Military\_transport\_ship}}: \textcolor{keyword}{public} \mbox{\hyperlink{class_ships_1_1_security__ship}{Security\_ship}}, \textcolor{keyword}{public} \mbox{\hyperlink{class_ships_1_1_transport__ship}{Transport\_ship}} \{}
+\DoxyCodeLine{309     \textcolor{keyword}{public}:}
+\DoxyCodeLine{313         \mbox{\hyperlink{class_ships_1_1_military__transport__ship_ac4a28b1a94f079fb9f7cb5b53884b53d}{Military\_transport\_ship}}() \{\}}
+\DoxyCodeLine{317         \mbox{\hyperlink{class_ships_1_1_military__transport__ship_a11082353d424bf7ec796db8e9542a842}{\string~Military\_transport\_ship}}() \{\}}
+\DoxyCodeLine{328         \mbox{\hyperlink{class_ships_1_1_military__transport__ship_ac4a28b1a94f079fb9f7cb5b53884b53d}{Military\_transport\_ship}}(std::string new\_type, std::string name, \textcolor{keywordtype}{double} max\_velocity,}
+\DoxyCodeLine{329                                  \textcolor{keywordtype}{double} max\_life, \textcolor{keywordtype}{double} cost, \textcolor{keywordtype}{double} max\_cargo, \textcolor{keywordtype}{double} coef\_decrease);}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{337         \textcolor{keyword}{friend} std::ostream \&\mbox{\hyperlink{class_ships_1_1_military__transport__ship_a8db32321a8984e02d30a70ca847fc689}{operator<<}}(std::ostream \&s, \textcolor{keyword}{const} \mbox{\hyperlink{class_ships_1_1_military__transport__ship}{Military\_transport\_ship}} \&ship);}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339     \};}
+\DoxyCodeLine{340 \}}
+\DoxyCodeLine{341 }
+\DoxyCodeLine{342 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//LAB4\_3SEM\_SHIP\_H}}
+
+\end{DoxyCode}
