@@ -23,6 +23,7 @@ namespace Pattern {
         Info &operator=(const Info &st){
             if (this != &st){
                 ship = st.ship;
+                cur_place = st.cur_place;
             }
             return *this;
         }
@@ -197,9 +198,10 @@ namespace Pattern {
 
         void add_ship(Ships::Ship *new_ship, Basic::Coordinate coordinates){
             typedef Table_element<std::string, struct Info>  Tab_elem;
+            const std::string &name = new_ship->get_name();
 
-            Info new_info= {new_ship, coordinates}; //
-            Tab_elem new_elem = {new_ship->get_name(), new_info};//
+            Info *new_info = new Info {new_ship, coordinates}; //
+            Tab_elem *new_elem = new Tab_elem(new_ship->get_name(), *new_info);//
 
             if (current_size == max_size) {
                 max_size += QUOTA;
@@ -208,7 +210,7 @@ namespace Pattern {
                 for (int i = 0; i < current_size; i ++) elements[i] = old[i];
                 delete [] old;
             }
-            elements[current_size] = new_elem;
+            elements[current_size] = *new_elem;
             current_size += 1;
         }
 

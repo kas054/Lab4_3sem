@@ -3,6 +3,7 @@
 //
 
 #include "Mission.h"
+#include <map>
 namespace Menu {
     void Basic_config::add_ship(Ships::Ship *new_ship) {
         std::string name = new_ship->get_name();
@@ -16,7 +17,7 @@ namespace Menu {
         if (fname == "") throw "Incorrect name o file";
 
         try {
-            load_b(fname, fd);
+            load_b(fd);
         }
         catch (...) {
             fd = fopen(fname.c_str(), "w+b");
@@ -42,8 +43,9 @@ namespace Menu {
         armament->change_property("status", value);
     }
 
-    void safe_armament(FILE *fd, Basic::Armament *armament){
+    void Basic_config::safe_armament(FILE *fd, Basic::Armament *armament){
         double value = 0;
+
         value = armament->get_property("damage");
         fwrite(&value, sizeof(double), 1, fd);
         value = armament->get_property("rate of fire");
@@ -60,22 +62,22 @@ namespace Menu {
         fwrite(&value, sizeof(double), 1, fd);
     }
 
-    void Basic_config::load_b(std::string fname, FILE *fd) { // basic config
+    void Basic_config::load_b(FILE *fd) { // basic config
         Ships::Security_ship *sec_ship;
         Ships::Transport_ship *t_ship;
         Basic::Armament *arm = new Basic::Armament;//
         int sz_ship, sz_armament, sz_cap;
         // открываем файл на чтение и запись
-        fd = fopen(fname.c_str(), "r+b");
+        //fd = fopen(fname.c_str(), "r+b");
 
         if (fd == nullptr) throw "No such file";
 
-        load_armament(fd, arm);
-/*
+       // load_armament(fd, arm);
+
         // считываем количество
         fread(&sz_ship, sizeof(int), 1, fd);
-        fread(&sz_armament, sizeof(int), 1, fd);
-        fread(&sz_cap, sizeof(int), 1, fd);
+        //fread(&sz_armament, sizeof(int), 1, fd);
+        //fread(&sz_cap, sizeof(int), 1, fd);
 
         // записываем корабли
         for (int i = 0; i < sz_ship; i++) {
@@ -97,10 +99,10 @@ namespace Menu {
 
             delete tmp_ship;
         }
-*/
+
         // закрытие файла
-        fclose(fd);
-        fd = nullptr;
+        //fclose(fd);
+        //fd = nullptr;
         delete arm;
     }
 
@@ -110,10 +112,14 @@ namespace Menu {
         int len_string;
         double prop;
         const char *tmp_char;
+        unsigned long size = ship.size();
         Ships::Ship *tmp_ship;
         Ships::Transport_ship *t_ship;
 
         fseek(fd, 0, SEEK_SET);
+        // записываем количество кораблей
+        fwrite(&size, sizeof(unsigned long), 1, fd);
+
         for (it = ship.begin(); it != ship.end(); it++) {
             tmp_ship = &(it->second);
             // write type
@@ -138,11 +144,11 @@ namespace Menu {
                 }
             }
         }
-        fclose(fd);
-        fd = nullptr;
     }
 
     void Basic_config::load_basic_info_ship(FILE *fd, Ships::Ship *tmp_ship) {
+        const std::map<std::string, double> &prop = *tmp_ship->get_map_prop();
+        std::map<std::string, double> :: const_iterator it;
         char *tmp_char, *name; // for type and name
         int tmp_int; // for max_velocity, cur_velocity, max_life, cur_life, cost, len of char *
 
@@ -160,9 +166,9 @@ namespace Menu {
         std::string tmp_name(name); // преобразовали в string
         tmp_ship->change_name(tmp_name);
 
-        for (int i = 0; i < tmp_ship->count_properties(); i++) { // считываем характеристики корабля
+        for ( it = prop.begin(); it != prop.end(); it++) { // считываем характеристики корабля
             fread(&tmp_int, sizeof(int), 1, fd);
-           // tmp_ship->change_property(i, tmp_int);
+            tmp_ship->change_property(it->first, tmp_int);
         }
 
         delete tmp_char;

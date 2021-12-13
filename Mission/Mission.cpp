@@ -1,12 +1,18 @@
 //
 // Created by PC on 21.11.2021.
 //
-
+#include <SFML/Graphics.hpp>
 #include "Mission.h"
 using namespace Basic;
 
 namespace Menu{
     using namespace Pattern;
+
+    Mission::Mission(Basic_config *conf, Table <std::string, Info> *c, Table <std::string, Info> *p ){
+        config = conf;
+        convoy = c;
+        pirates = p;
+    }
 
     double Mission::get_properties(std::string i) const{
         double answer;
@@ -99,12 +105,14 @@ namespace Menu{
     }
 
     void Mission::buy_ship(int c_p, std::string ship_type) {
+        std::string max_money = "max money", spend_money = "spend money", max_count_c = "max count convoy",
+        max_count_p = "max count pirates", cur_velocity = "cur velocity", max_velocity = "max velocity";
         std::map<std::string, Ships::Ship>::iterator it;
         Ships::Ship *new_ship;
         int cost;
         it = (config->ship).find(ship_type);
 
-        if (it == (config->ship).end()) throw "No such ship";
+        if (it == (config->ship).end()) return;
 
         new_ship = new Ships::Ship;
         *new_ship = it->second;
@@ -113,23 +121,26 @@ namespace Menu{
         switch (c_p) {
             case 0: { // add ship to convoy
                 //max_money - spend_money > 0 && max_count_ship_c > current_size of convoy
-                if ((this->get_properties("max money") - this->get_properties("spend money")) > 0 &&
-                    (this->get_properties("max count convoy") > convoy->get_count())) {
+                if ((get_properties(max_money) - get_properties(spend_money)) > 0 && (get_properties(max_count_c) > convoy->get_count()))
+                {
                     convoy->add_ship(new_ship, *get_coord_A_B(0)); // помещаем корабль на базу А
-                    this->set_properties("spend money", cost + this->get_properties("spend money")); // change spend_money
-                } else {
+                    set_properties(spend_money, cost + get_properties(spend_money)); // change spend_money
+                    break;
+                }
+                else
+                {
                     delete new_ship;
-                    throw "You do not have money or free place in convoy";
+                    return;
                 }
             }
             case 1:{ // add pirates
-                new_ship->change_property("cur velocity", new_ship->get_property("max velocity"));// current velocity = max velocity
+                new_ship->change_property(cur_velocity, new_ship->get_property(max_velocity));// current velocity = max velocity
                 // max_count_ship_p > current_size of pirates
-                if ((this->get_properties("max count pirates") > pirates->get_count()))
-                    convoy->add_ship(new_ship, *get_coord_A_B(0)); // помещаем корабль на базу A, потом корабли пиратов распределятся по координатам
+                if ((get_properties(max_count_p) > pirates->get_count()))
+                    pirates->add_ship(new_ship, *get_coord_A_B(0)); // помещаем корабль на базу A, потом корабли пиратов распределятся по координатам
                 else{
                     delete new_ship;
-                    throw "Too many pirates";
+                    return;
                 }
             }
         }
@@ -315,6 +326,13 @@ namespace Menu{
             case 1:
                 it = pirates->find(name);
         }
+
+        if (x > get_x()) x = get_x();
+        else if (x < -1 * get_x())  x = get_x() * (-1);
+
+        if (y > get_y()) y = get_y();
+        else if (y < -1 * get_y())  y = get_y() * (-1);
+
         it->info.cur_place.x = x;
         it->info.cur_place.y = y;
     }
@@ -505,6 +523,105 @@ namespace Menu{
                 s_ship = dynamic_cast<Ships::Security_ship *>(it_c->info.ship);
                 s_ship->shoot(it_c->info.cur_place, it_p->info.cur_place);
             }
+        }
+    }
+
+    void Mission::draw() {
+
+        int x, y;
+        x = this->get_x();
+        y = this->get_y();
+
+        sf::RenderWindow window(sf::VideoMode((x +10) * 64, (y+ 10) * 64), "Convoy");
+
+        sf::Sprite sprite;
+
+        sf::Image water_image, base_c_imagine, pirates_imagine, convoy_imagine, base_p_imagine;
+
+        water_image.loadFromFile("../Mission/Imagine/water.png");
+        base_c_imagine.loadFromFile("../Mission/Imagine/Base_convoy.png");
+        base_p_imagine.loadFromFile("../Mission/Imagine/Base_convoy.png");
+        pirates_imagine.loadFromFile("../Mission/Imagine/pirate.png");
+        convoy_imagine.loadFromFile("../Mission/Imagine/pirate.png");
+
+
+        sf::Texture water_texture;
+        sf::Texture base_c_texture;
+        sf::Texture base_p_texture;
+        sf::Texture pirates_texture;
+        sf::Texture convoy_texture;
+
+        water_texture.loadFromImage(water_image);
+        base_c_texture.loadFromImage(base_c_imagine);
+        base_p_texture.loadFromImage(base_p_imagine);
+        pirates_texture.loadFromImage(pirates_imagine);
+        convoy_texture.loadFromImage(convoy_imagine);
+
+        while (window.isOpen())
+        {
+            sf::Event event;
+
+            while (window.pollEvent(event))
+            {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+            }
+
+            window.clear();
+
+            for (int i = 0; i < x; i ++){
+                for (int j = 0; j < y; j ++){
+                    sprite.setTexture(water_texture);
+                    sprite.setPosition(j * 64, i * 64);
+                    window.draw(sprite);
+                }
+            }
+
+            std::vector<Basic::Coordinate> :: iterator base_pirates;
+
+            // Базы пиратов
+            for (base_pirates = coordinates_pirates.begin(); base_pirates != coordinates_pirates.end(); base_pirates ++) {
+                sprite.setTexture(base_p_texture);
+                sprite.setPosition(base_pirates->x * 64, base_pirates->y * 64);
+                window.draw(sprite);
+            }
+
+            // База конвоя А
+            for (int i = 0; i < get_properties("size A"); i ++){
+                for (int j = 0; j < get_properties("size A"); j ++){
+                    sprite.setTexture(base_c_texture);
+                    sprite.setPosition((get_coord_A_B(0)->x + i) * 64, (get_coord_A_B(0)->y + j)* 64);
+                    window.draw(sprite);
+                }
+            }
+
+            // База конвоя B
+            for (int i = 0; i < get_properties("size B"); i ++){
+                for (int j = 0; j < get_properties("size B"); j ++){
+                    sprite.setTexture(base_c_texture);
+                    sprite.setPosition((get_coord_A_B(1)->x + i) * 64, (get_coord_A_B(1)->y + j)* 64);
+                    window.draw(sprite);
+                }
+            }
+
+
+            Table <std::string, Info> :: Iterator it;
+
+            // Корабли конвоя
+            for (it = convoy->begin(); it != convoy->end(); it ++){
+                sprite.setTexture(convoy_texture);
+                sprite.setPosition(it->info.cur_place.x * 64, it->info.cur_place.y * 64);
+                window.draw(sprite);
+            }
+
+            // Корабли пиратов
+            for (it = pirates->begin(); it != pirates->end(); it ++){
+                sprite.setTexture(pirates_texture);
+                sprite.setPosition(it->info.cur_place.x * 64, it->info.cur_place.y * 64);
+                window.draw(sprite);
+            }
+
+            window.display();
         }
     }
 }

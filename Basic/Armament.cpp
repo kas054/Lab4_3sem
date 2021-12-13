@@ -10,9 +10,9 @@ namespace Basic {
     std::ostream &operator<<(std::ostream &s, const Armament &vec) {
         //std::getline(std::cin, myName);
         s << "Type of armament: " << vec.type << "\n";
-        s << "damage\t" << "speed\t" << "range\t" << "max ammunition\t" << "cur_ammunition\t" << "cost\n \t";
+        s << "damage\t" << "speed\t" << "range\t" << "max ammunition\t" << "cur_ammunition\t" << "cost\t" << "status\n";
         for (int i = 0; i < vec.count_properties(); i++) {
-            s << (vec.properties)[i] << "\t";
+            s << (vec.properties)[i] << "\t\t";
          }
         s << std::endl;
         return s;

@@ -20,18 +20,32 @@ namespace Menu {
     private:
         class Basic_config *config;
         Basic::Capitan commander;
-        Table <std::string, Info> *convoy;
         Table <std::string, Info> *pirates;
+        Table <std::string, Info> *convoy;
         std::map<std::string, double> prop = {{"max money", 0}, {"spend money", 0}, {"full cargo", 0}, {"min cargo", 0},{"cur cargo", 0},
                                          {"delivered cargo", 0},{"max count convoy", 0},{"max count pirates", 0}, {"size A", 0}, {"size B", 0}};
-        /* 0 - max_money, 1 - spend_money, 2 - full_cargo, 3 - min_cargo, 4 - cur_cargo,
-          5 - delivered_cargo, 6 - max_count_ship_c, 7 - max_count_ship_p, 8 - size A, 9 - size B */
         Basic::Coordinate coordinates_A = {0, 0};
         Basic::Coordinate coordinates_B = {0, 0};
         std::vector<Basic::Coordinate> coordinates_pirates;
-        // параметры появления пиратов?
+
+        // size of map
+        int max_x = 50;
+        int max_y = 50;
+
     public:
-        Mission() : convoy(nullptr), pirates(nullptr) {};
+        Mission() : config(nullptr), convoy(nullptr), pirates(nullptr) {}
+
+        Mission(Basic_config *conf, Table <std::string, Info> *c, Table <std::string, Info> *p);
+
+        Mission(Basic_config *c) {config = c;}
+
+        int get_x() {return max_x;}
+
+        int get_y() {return max_y;}
+
+        void set_x(int x) {max_x = x;}
+
+        void set_y(int y) {max_y = y;}
 
         float p_count() const {return prop.size();}
 
@@ -92,6 +106,8 @@ namespace Menu {
         void pirates_shoot();
 
         void convoy_shoot(std::vector<std::string> &convoy_ship, std::string pirate);
+
+        void draw();
     };
 
     class Basic_config {
@@ -106,7 +122,7 @@ namespace Menu {
 
         FILE * load_from_file(std::string fname = "");
 
-        void load_b(std::string fname, FILE *fd);
+        void load_b(FILE *fd);
 
         void safe_b(FILE *fd);
 
