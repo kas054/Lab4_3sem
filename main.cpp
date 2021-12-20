@@ -1,24 +1,36 @@
 #include <iostream>
 #include "Mission/Mission.h"
-#include <SFML/Graphics.hpp>
 int main() {
+
+    //Menu::Basic_config *b_conf1 = new Menu::Basic_config;
+    //Menu::Mission mission1(b_conf1);
+    //mission1.get_config()->load_from_file("mission1");
+
+    std::string new_type = "rocket";
+    double damage = 2, rate = 0.3, range = 2, max_ammunition = 20, cost = 9000;
+    double error = 0.01;
+    Basic::Armament *a = new Basic::Armament(new_type, damage, rate, range, max_ammunition, cost);
 
     std::string st = "type A";
     std::string st1 = "type B";
+    std::string st2 = "type С";
+    std::string st4 = "Type D";
     double number = 1;
 
     std::map<std::string, double> :: const_iterator it;
     const std::map<std::string, double> *mp;
 
-    Ships::Ship *a = new Ships::Ship(st, st, number, number, number);
-    Ships::Transport_ship *b = new Ships::Transport_ship(st, st, number, number, number, number, number);
-    Ships::Military_transport_ship *d = new Ships::Military_transport_ship(st, st, number, number, number, number, number);
-    Ships::Security_ship *c = new Ships::Security_ship(st, st, number, number, number);
-    Ships::Security_ship *c2 = new Ships::Security_ship(st1, st1, number, number, number);
+    Ships::Transport_ship *b = new Ships::Transport_ship("Transport_ship", st4, number, number, number, number, number);
+    Ships::Military_transport_ship *d = new Ships::Military_transport_ship("M_T_ship", st2, number, number, number, number, number);
+    Ships::Security_ship *c = new Ships::Security_ship("Security_ship", st, number, number, number);
+    Ships::Security_ship *c2 = new Ships::Security_ship("Security_ship", st1, number, number, number);
 
     Menu::Basic_config *b_conf = new Menu::Basic_config;
     b_conf->add_ship(c);
     b_conf->add_ship(c2);
+    b_conf->add_ship(d);
+    b_conf->add_ship(b);
+    b_conf->add_armament(a);
 
     Pattern::Table <std::string, Pattern::Info> *conv = new Pattern::Table <std::string, Pattern::Info>;
     Pattern::Table <std::string, Pattern::Info> *pirates = new Pattern::Table <std::string, Pattern::Info>;
@@ -32,12 +44,18 @@ int main() {
     mission.set_coord_A_B(0, 4, 5);
     mission.set_coord_A_B(1, 30, 20);
 
-    //mission.buy_ship(0, c->get_name());
+    mission.buy_ship(0, c->get_name());
     mission.buy_ship(0, c2->get_name());
+    mission.buy_ship(0, d->get_name());
+    mission.buy_ship(0, b->get_name());
+    mission.change_name_ship(0, st4, "AAAA");
+
+
     mission.buy_ship(1, c->get_name());
-   // mission.buy_ship(1, c2->get_name());
-   // mission.buy_ship(1, c->get_name());
-   // mission.buy_ship(1, c2->get_name());
+    mission.buy_ship(1, c2->get_name());
+    mission.buy_ship(1, c->get_name());
+    mission.buy_ship(1, c2->get_name());
+    mission.buy_armament(1, st, "stern", "rocket");
 
     mission.add_pirates_coordinate(34, 25);
     mission.add_pirates_coordinate(25, 6);
@@ -46,6 +64,8 @@ int main() {
 
     mission.distribution_pirates();
     mission.start_coord();
+
+    //mission.get_config()->load_from_file("mission1");
 
     mission.draw();
     delete b_conf;

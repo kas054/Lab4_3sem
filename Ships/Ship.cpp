@@ -76,8 +76,15 @@ namespace Ships{
              delete armaments[i];
      }
 
-     void Security_ship::change_armament(int i, std::string property, double new_value, std::string type) {
+     void Security_ship::change_armament(std::string place, std::string property, double new_value, std::string type) {
          // номер оружия, свойство оружия, новое значение, тип оружия
+         int i = -1;
+
+         if (place == "stern") i = 0;
+         else if (place == "bow") i = 1;
+         else if (place == "right") i = 2;
+         else if (place == "left") i = 3;
+
          if (i < 0 || i > 3) throw "Invalid place for armament";
          Basic::Armament *armament = armaments[i];
          if (armament != nullptr) {
@@ -87,12 +94,35 @@ namespace Ships{
          else throw "No such armament";
      }
 
-     Basic::Armament *Security_ship::get_info_armament(int i) const{
+     Basic::Armament *Security_ship::get_info_armament(std::string place) const{
+         int i = -1;
+
+         if (place == "stern") i = 0;
+         else if (place == "bow") i = 1;
+         else if (place == "right") i = 2;
+         else if (place == "left") i = 3;
+
          if (i < 0 || i > 3) throw std::runtime_error("Invalid place for armament");
          return armaments[i];
      }
 
-     void Security_ship::change_place(int old_place, int new_place){
+    Basic::Armament *Security_ship::get_info_armament(int i) const{
+        if (i < 0 || i > 3) throw std::runtime_error("Invalid place for armament");
+        return armaments[i];
+    }
+
+     void Security_ship::change_place(std::string old_, std::string new_){
+         int old_place = -1, new_place = -1;
+
+         if (old_ == "stern") old_place = 0;
+         else if (old_== "bow") old_place = 1;
+         else if (old_ == "right") old_place = 2;
+         else if (old_ == "left") old_place = 3;
+
+         if (new_ == "stern") new_place = 0;
+         else if (new_  == "bow") new_place = 1;
+         else if (new_ == "right") new_place = 2;
+         else if (new_  == "left") new_place = 3;
 
          if (old_place < 0 || old_place > 3 ) throw std::runtime_error("Invalid place for old place");
          else if (new_place < 0 || new_place > 3 ) throw std::runtime_error("Invalid place for new place");
@@ -104,8 +134,15 @@ namespace Ships{
          armaments[old_place] = nullptr;
      }
 
-     void  Security_ship::add_armament(Armament *new_armament, int place){
+     void  Security_ship::add_armament(Armament *new_armament, std::string place1){
         Basic::Armament * add_armament = nullptr;
+        int place = -1;
+
+        if (place1 == "stern") place = 0;
+        else if (place1 == "bow") place = 1;
+        else if (place1 == "right") place = 2;
+        else if (place1 == "left") place = 3;
+
         if (place < 0 || place > 4) throw "No such place";
         if (armaments[place] == nullptr) {
             add_armament = new Basic::Armament;
@@ -115,7 +152,14 @@ namespace Ships{
         else throw "This place is not free";
      }
 
-    void  Security_ship::remove_armament(int place) {
+    void  Security_ship::remove_armament(std::string place1) {
+        int place = -1;
+
+        if (place1 == "stern") place = 0;
+        else if (place1 == "bow") place = 1;
+        else if (place1 == "right") place = 2;
+        else if (place1 == "left") place = 3;
+
         if (place < 0 || place > 4) throw "No such place";
         if (armaments[place] == nullptr) throw "Place is free";
         delete armaments[place];

@@ -25,7 +25,6 @@ namespace Ships {
         /**
          * constructor
          * \param new_type new type of ship
-         * \throw "hdfjghjdf" dsa
          * \returns name of smth
          */
         Ship(std::string new_type, std::string name,
@@ -234,14 +233,14 @@ namespace Ships {
          * @throw "This place is not free"
          * @throw "No such place"
          */
-        void add_armament(Basic::Armament *new_armament, int place);
+        void add_armament(Basic::Armament *new_armament, std::string place);
 
         /**
          * remove armament from a ship
          * @param place location of weapons on the ship
          * @throw "No such place"
          */
-        void remove_armament(int place);
+        void remove_armament(std::string place);
 
         /**
          * change armament on a ship
@@ -252,7 +251,7 @@ namespace Ships {
          * @throw "Invalid place for armament"
          * @thro "No such place"
          */
-        void change_armament(int i, std::string property, double new_value, std::string type = ""); // номер оружия, свойство оружия, новое значение, тип оружия
+        void change_armament(std::string place, std::string property, double new_value, std::string type = ""); // номер оружия, свойство оружия, новое значение, тип оружия
 
         /**
          * get information about armament
@@ -260,6 +259,8 @@ namespace Ships {
          * @return armament
          * @throw "Invalid place for armament"
          */
+
+        Basic::Armament *get_info_armament(std::string place) const;
 
         Basic::Armament *get_info_armament(int i) const;
 
@@ -272,7 +273,7 @@ namespace Ships {
          * @throw "No armament in this place"
          * @throw "This place is not free"
          */
-        void change_place(int old_place, int new_place);
+        void change_place(std::string old_place, std::string new_place);
 
         /**
          * make a shoot

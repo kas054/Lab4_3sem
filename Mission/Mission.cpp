@@ -2,6 +2,7 @@
 // Created by PC on 21.11.2021.
 //
 #include <SFML/Graphics.hpp>
+
 #include "Mission.h"
 using namespace Basic;
 
@@ -56,11 +57,18 @@ namespace Menu{
 
     void  Mission::change_name_ship(int c_p, std::string name, std::string new_name){
         Ships::Ship *cur_ship;
+        Table <std::string, Info> :: Iterator it;
+
         switch(c_p) {
             case 0:
                 cur_ship = convoy->description_ship(name);
+                it = convoy->find(name);
+                it->index = new_name;
+                break;
             case 1:
                 cur_ship = pirates->description_ship(name);
+                it = pirates->find(name);
+                it->index = new_name;
         }
         cur_ship->change_name(new_name);
     }
@@ -107,15 +115,18 @@ namespace Menu{
     void Mission::buy_ship(int c_p, std::string ship_type) {
         std::string max_money = "max money", spend_money = "spend money", max_count_c = "max count convoy",
         max_count_p = "max count pirates", cur_velocity = "cur velocity", max_velocity = "max velocity";
-        std::map<std::string, Ships::Ship>::iterator it;
+        std::map<std::string, Ships::Ship *>::iterator it;
         Ships::Ship *new_ship;
         int cost;
         it = (config->ship).find(ship_type);
 
         if (it == (config->ship).end()) return;
 
-        new_ship = new Ships::Ship;
-        *new_ship = it->second;
+        if (it->second->get_type() == "Security_ship") new_ship = new Ships::Security_ship;
+        else if(it->second->get_type() == "Transport_ship") new_ship = new Ships::Transport_ship;
+        else new_ship = new Ships::Military_transport_ship;
+        //new_ship = new Ships::Ship;
+        *new_ship = *(it->second);
         cost = new_ship->get_property("cost");
 
         switch (c_p) {
@@ -161,7 +172,7 @@ namespace Menu{
     void Mission::del_ship(int c_p, std::string name){ // remove from Basic_config
         Table <std::string, Info> :: Iterator it;
         std::string type;
-        std::map<std::string, Ships::Ship> :: iterator map_it;
+        std::map<std::string, Ships::Ship *> :: iterator map_it;
 
         switch (c_p){
             case 0: {
@@ -202,10 +213,11 @@ namespace Menu{
         cur_ship->set_cur_speed(cur_ship->possible_speed()); // устанавливаем скорость на максимально возможную при текущей загрузке
     }
 
-    void Mission::buy_armament(int c_p, std::string name, int place, std::string armament){
+    void Mission::buy_armament(int c_p, std::string name, std::string place, std::string armament){
         Table<std::string, Info> :: Iterator it;
         std::vector <Basic::Armament> :: const_iterator vec_it;
         Ships::Security_ship *cur_ship;
+        Ships::Ship *it_ship;
         Basic::Armament *new_armament = nullptr;
         int cost;
 
@@ -213,6 +225,7 @@ namespace Menu{
             case 0: {
                 it = convoy->find(name);
                 if (it == convoy->end()) throw "No such ship";
+                break;
             }
             case 1: {
                 it = pirates->find(name);
@@ -220,7 +233,8 @@ namespace Menu{
             }
         }
 
-        cur_ship = dynamic_cast<Ships::Security_ship *>((*it).info.ship);
+        it_ship = (*it).info.ship;
+        cur_ship = dynamic_cast<Ships::Security_ship *>(it_ship);
 
         for (vec_it = (config->armament).cbegin(); vec_it != config->armament.cend(); ++vec_it){
             if (vec_it->get_type() == armament) {
@@ -248,7 +262,7 @@ namespace Menu{
 
     }
 
-    void Mission::change_armament(int c_p, std::string name, int place, std::string property, int new_value, std::string type){
+    void Mission::change_armament(int c_p, std::string name, std::string place, std::string property, int new_value, std::string type){
         Table<std::string, Info> :: Iterator it;
         std::vector <Basic::Armament> :: iterator vec_it;
         Ships::Security_ship *cur_ship;
@@ -273,7 +287,7 @@ namespace Menu{
         }
     }
 
-    void Mission::sell_armament(int c_p, std::string name, int place){
+    void Mission::sell_armament(int c_p, std::string name, std::string place){
         Table<std::string, Info> :: Iterator it;
         Ships::Security_ship *cur_ship;
         Basic::Armament *cur_armament;
@@ -323,6 +337,7 @@ namespace Menu{
         switch(c_p){
             case 0:
                 it = convoy->find(name);
+                break;
             case 1:
                 it = pirates->find(name);
         }
@@ -528,6 +543,7 @@ namespace Menu{
 
     void Mission::draw() {
 
+        using sf::Keyboard;
         int x, y;
         x = this->get_x();
         y = this->get_y();
@@ -536,13 +552,14 @@ namespace Menu{
 
         sf::Sprite sprite;
 
-        sf::Image water_image, base_c_imagine, pirates_imagine, convoy_imagine, base_p_imagine;
+        sf::Image water_image, base_c_imagine, pirates_imagine, convoy_imagine, base_p_imagine, transport_imagine;
 
         water_image.loadFromFile("../Mission/Imagine/water.png");
         base_c_imagine.loadFromFile("../Mission/Imagine/Base_convoy.png");
         base_p_imagine.loadFromFile("../Mission/Imagine/base_b.png");
         pirates_imagine.loadFromFile("../Mission/Imagine/pirates8.png");
         convoy_imagine.loadFromFile("../Mission/Imagine/security3.png");
+        transport_imagine.loadFromFile("../Mission/Imagine/transport2.png");
 
 
         sf::Texture water_texture;
@@ -550,12 +567,14 @@ namespace Menu{
         sf::Texture base_p_texture;
         sf::Texture pirates_texture;
         sf::Texture convoy_texture;
+        sf::Texture transport_texture;
 
         water_texture.loadFromImage(water_image);
         base_c_texture.loadFromImage(base_c_imagine);
         base_p_texture.loadFromImage(base_p_imagine);
         pirates_texture.loadFromImage(pirates_imagine);
         convoy_texture.loadFromImage(convoy_imagine);
+        transport_texture.loadFromImage(transport_imagine);
 
         while (window.isOpen())
         {
@@ -609,7 +628,12 @@ namespace Menu{
 
             // Корабли конвоя
             for (it = convoy->begin(); it != convoy->end(); it ++){
-                sprite.setTexture(convoy_texture);
+                if (it->info.ship->get_type() == "M_T_ship" || it->info.ship->get_type() == "Security_ship"){
+                    sprite.setTexture(convoy_texture);
+                }
+                else if (it->info.ship->get_type() == "Transport_ship"){
+                    sprite.setTexture(transport_texture);
+                }
                 sprite.setPosition(it->info.cur_place.x * 64, it->info.cur_place.y * 64);
                 window.draw(sprite);
             }
@@ -622,6 +646,7 @@ namespace Menu{
             }
 
             window.display();
+
         }
     }
 }

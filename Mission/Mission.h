@@ -41,6 +41,8 @@ namespace Menu {
 
         int get_x() {return max_x;}
 
+        class Basic_config *get_config() {return config;}
+
         int get_y() {return max_y;}
 
         void set_x(int x) {max_x = x;}
@@ -77,11 +79,11 @@ namespace Menu {
 
         void auto_cargo();
 
-        void buy_armament(int c_p, std::string name, int place, std::string armament); // place- расположение оружия
+        void buy_armament(int c_p, std::string name, std::string place, std::string armament); // place- расположение оружия
 
-        void change_armament(int c_p, std::string name, int place, std::string property, int new_value, std::string type = "");
+        void change_armament(int c_p, std::string name, std::string place, std::string property, int new_value, std::string type = "");
 
-        void sell_armament(int c_p, std::string name, int place);
+        void sell_armament(int c_p, std::string name, std::string place);
 
         void add_pirates_coordinate(double x, double y);
 
@@ -108,17 +110,21 @@ namespace Menu {
         void convoy_shoot(std::vector<std::string> &convoy_ship, std::string pirate);
 
         void draw();
+
+
     };
 
     class Basic_config {
     public:
-        std::map<std::string, Ships::Ship> ship;
+        std::map<std::string, Ships::Ship *> ship;
 
         std::vector<Basic::Armament> armament;
 
         std::vector<Basic::Capitan> capitan;
 
         void add_ship(Ships::Ship *ship);
+
+        void add_armament(Basic::Armament *armament);
 
         FILE * load_from_file(std::string fname = "");
 

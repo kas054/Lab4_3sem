@@ -7,22 +7,29 @@
 namespace Menu {
     void Basic_config::add_ship(Ships::Ship *new_ship) {
         std::string name = new_ship->get_name();
-        // m.insert(pair<string,string>("key2", "val2"));
-        //mymap.insert ( std::pair<char,int>('a',100) );
-        (this->ship).insert(std::pair<std::string, Ships::Ship>(name, *new_ship));
+        (this->ship).insert(std::pair<std::string, Ships::Ship *>(name, new_ship));
     }
 
     FILE *Basic_config::load_from_file(std::string fname) {
         FILE *fd;
-        if (fname == "") throw "Incorrect name o file";
 
-        try {
-            load_b(fd);
-        }
-        catch (...) {
+        if (fname == "") return nullptr;
+
+        fd = fopen(fname.c_str(), "r+b");
+        if (fd == nullptr)  {
             fd = fopen(fname.c_str(), "w+b");
+            safe_b(fd);
+        }
+        else {
+            load_b(fd);
+            fclose(fd);
+            fd = nullptr;
         }
         return fd;
+    }
+
+    void Basic_config::add_armament(Basic::Armament *armament){
+        (this->armament).push_back(*armament);
     }
 
     void Basic_config::load_armament(FILE *fd, Basic::Armament *armament) {
@@ -67,10 +74,8 @@ namespace Menu {
         Ships::Transport_ship *t_ship;
         Basic::Armament *arm = new Basic::Armament;//
         int sz_ship, sz_armament, sz_cap;
-        // открываем файл на чтение и запись
-        //fd = fopen(fname.c_str(), "r+b");
 
-        if (fd == nullptr) throw "No such file";
+        if (fd == nullptr) throw 0;
 
        // load_armament(fd, arm);
 
@@ -84,7 +89,7 @@ namespace Menu {
             Ships::Military_transport_ship *tmp_ship = new Ships::Military_transport_ship;
 
             load_basic_info_ship(fd, tmp_ship);
-
+/*
             if (tmp_ship->get_type() == "Security_ship") {
                 sec_ship = dynamic_cast<Ships::Security_ship *>(tmp_ship);
                 (this->ship).insert(std::make_pair(sec_ship->get_name(), *sec_ship));
@@ -96,19 +101,17 @@ namespace Menu {
                 this->load_transport_ship(fd, tmp_ship);
                 (this->ship).insert(std::make_pair(tmp_ship->get_name(), *tmp_ship));
             }
-
-            delete tmp_ship;
+*/
+            this->add_ship(tmp_ship);
         }
 
-        // закрытие файла
-        //fclose(fd);
-        //fd = nullptr;
         delete arm;
     }
 
     void Basic_config::safe_b(FILE *fd) { // сохранение базовой конфигурации
-        std::map<std::string, Ships::Ship>::iterator it;
-        std::map<std::string, double> :: iterator properties;
+        std::map<std::string, Ships::Ship *>::iterator it;
+        const  std::map<std::string, double> *tmp_map;
+        std::map<std::string, double> :: const_iterator properties;
         int len_string;
         double prop;
         const char *tmp_char;
@@ -118,31 +121,39 @@ namespace Menu {
 
         fseek(fd, 0, SEEK_SET);
         // записываем количество кораблей
-        fwrite(&size, sizeof(unsigned long), 1, fd);
+        fwrite(&size, sizeof(int), 1, fd);
 
         for (it = ship.begin(); it != ship.end(); it++) {
-            tmp_ship = &(it->second);
+            tmp_ship = (it->second);
             // write type
             len_string = (tmp_ship->get_type()).length();
+            fwrite(&len_string, sizeof(int), 1, fd);
             tmp_char = (tmp_ship->get_type()).c_str();
             fwrite(tmp_char, sizeof(char), len_string + 1, fd);
             // write name
             len_string = (tmp_ship->get_name()).length();
             tmp_char = (tmp_ship->get_name()).c_str();
-            fwrite(tmp_char, sizeof(char), len_string + 1, fd);
+            fwrite(&len_string, sizeof(int), 1, fd);
+            fwrite(tmp_char,sizeof(char), len_string + 1, fd);
             // write properties
-            for (int i = 0; i < tmp_ship->count_properties(); i++) {
-             //   prop = tmp_ship->get_property(i);
+            tmp_map = it->second->get_map_prop();
+            for (properties = tmp_map->begin(); properties != tmp_map->end(); properties ++){
+                prop = properties->second;
                 fwrite(&prop, sizeof(double), 1, fd);
             }
+           /* for (int i = 0; i < tmp_ship->count_properties(); i++) {
+             //   prop = tmp_ship->get_property(i);
+                fwrite(&prop, sizeof(double), 1, fd);
+            } */
             // write information about cargo
+            /*
             if (tmp_ship->get_type() == "Transport_ship") {
                 t_ship = dynamic_cast<Ships::Transport_ship *>(tmp_ship);
                 for (int j = 0; j < t_ship->get_size(); j++) {
                     prop = t_ship->get_info_cargo(j);
                     fwrite(&prop, sizeof(double), 1, fd);
                 }
-            }
+            } */
         }
     }
 
@@ -155,14 +166,14 @@ namespace Menu {
         // Тип корабля
         fread(&tmp_int, sizeof(int), 1, fd); // считали длину строки
         tmp_char = new char[tmp_int + 1];
-        fread(&tmp_char, sizeof(char), tmp_int + 1, fd); // считали строку
+        fread(tmp_char, sizeof(char), tmp_int + 1, fd); // считали строку
         std::string tmp_string(tmp_char); // преобразовали в string
         tmp_ship->change_type(tmp_string);
 
         // Имя корабля
         fread(&tmp_int, sizeof(int), 1, fd); // считали длину строки
         name = new char[tmp_int + 1];
-        fread(&name, sizeof(char), tmp_int + 1, fd); // считали строку
+        fread(name, sizeof(char), tmp_int + 1, fd); // считали строку
         std::string tmp_name(name); // преобразовали в string
         tmp_ship->change_name(tmp_name);
 
@@ -174,6 +185,7 @@ namespace Menu {
         delete tmp_char;
         delete name;
     }
+
 
     void Basic_config::load_transport_ship(FILE *fd, Ships::Transport_ship *tmp_ship) {
         int tmp_int;

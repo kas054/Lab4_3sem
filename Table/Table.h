@@ -221,8 +221,8 @@ namespace Pattern {
         }
 
         Ships::Ship *description_ship(const std::string  &name){
-            struct Info get_info = (*this)[name];
-            return get_info.ship;
+            const struct Info *get_info = &((*this)[name]);
+            return get_info->ship;
         }
     };
      /*
