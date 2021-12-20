@@ -114,7 +114,7 @@ namespace Menu{
 
     void Mission::buy_ship(int c_p, std::string ship_type) {
         std::string max_money = "max money", spend_money = "spend money", max_count_c = "max count convoy",
-        max_count_p = "max count pirates", cur_velocity = "cur velocity", max_velocity = "max velocity";
+        max_count_p = "max count pirates", cur_velocity = "cur velocity", max_velocity = "max velocity", cur_life = "cur life", max_life = "max life";
         std::map<std::string, Ships::Ship *>::iterator it;
         Ships::Ship *new_ship;
         int cost;
@@ -132,6 +132,8 @@ namespace Menu{
         switch (c_p) {
             case 0: { // add ship to convoy
                 //max_money - spend_money > 0 && max_count_ship_c > current_size of convoy
+                new_ship->change_property(cur_velocity, new_ship->get_property(max_velocity));
+                new_ship->change_property(cur_life, new_ship->get_property(max_life));
                 if ((get_properties(max_money) - get_properties(spend_money)) > 0 && (get_properties(max_count_c) > convoy->get_count()))
                 {
                     convoy->add_ship(new_ship, *get_coord_A_B(0)); // помещаем корабль на базу А
@@ -146,6 +148,7 @@ namespace Menu{
             }
             case 1:{ // add pirates
                 new_ship->change_property(cur_velocity, new_ship->get_property(max_velocity));// current velocity = max velocity
+                new_ship->change_property(cur_life, new_ship->get_property(max_life));
                 // max_count_ship_p > current_size of pirates
                 if ((get_properties(max_count_p) > pirates->get_count()))
                     pirates->add_ship(new_ship, *get_coord_A_B(0)); // помещаем корабль на базу A, потом корабли пиратов распределятся по координатам
@@ -342,11 +345,11 @@ namespace Menu{
                 it = pirates->find(name);
         }
 
-        if (x > get_x()) x = get_x();
-        else if (x < -1 * get_x())  x = get_x() * (-1);
+        if (x > get_x()) x = get_x() - 1;
+        else if (x < -1 * get_x())  x = get_x() * (-1) + 1;
 
-        if (y > get_y()) y = get_y();
-        else if (y < -1 * get_y())  y = get_y() * (-1);
+        if (y > get_y()) y = get_y() - 1;
+        else if (y < -1 * get_y())  y = get_y() * (-1) + 1 ;
 
         it->info.cur_place.x = x;
         it->info.cur_place.y = y;
@@ -419,8 +422,8 @@ namespace Menu{
         Basic::Coordinate tmp_coord;
         double change_x = 0, change_y = 0, velocity;
 
-        if (direction == "up") change_y = 1;
-        else if (direction == "down") change_y = -1;
+        if (direction == "up") change_y = -1;
+        else if (direction == "down") change_y = 1;
         else if (direction == "left") change_x = -1;
         else if(direction == "right") change_x = 1;
 
@@ -428,6 +431,7 @@ namespace Menu{
             velocity = it->info.ship->get_property("cur velocity");
             tmp_coord = it->info.cur_place;
             change_coord(0, it->index, tmp_coord.x + change_x * velocity, tmp_coord.y + change_y * velocity);
+            tmp_coord = it->info.cur_place;
         }
     }
 
@@ -448,7 +452,7 @@ namespace Menu{
 
             velocity = it->info.ship->get_property("cur velocity");
             tmp_coord = it->info.cur_place;
-            change_coord(0, it->index, tmp_coord.x + change_x * velocity, tmp_coord.y + change_y * velocity);
+            change_coord(1, it->index, tmp_coord.x + change_x * velocity, tmp_coord.y + change_y * velocity);
         }
     }
 
@@ -469,6 +473,7 @@ namespace Menu{
                 }
                 set_properties("cur cargo", cargo);
                 convoy->del_ship(name);
+                break;
             }
 
             case 1:
@@ -480,9 +485,11 @@ namespace Menu{
     void Mission::check_cur_life(){
         Pattern::Table<std::string, Info> :: Iterator it;
 
-        for (it = convoy->begin(); it != convoy->end(); it ++){
-            if (it->info.ship->get_property("cur life") == 0)
-                lose_ship(0, it->index);
+        if (convoy->get_count() != 0){
+            for (it = convoy->begin(); it != convoy->end(); it++) {
+                if (it->info.ship->get_property("cur life") == 0)
+                    lose_ship(0, it->index);
+            }
         }
 
         for (it = pirates->begin(); it != pirates->end(); it ++){
@@ -516,39 +523,77 @@ namespace Menu{
     void Mission::pirates_shoot() {
         Ships::Security_ship *s_ship;
         Pattern::Table<std::string, Info> :: Iterator it_p, it_c;
+        double damage = 0;
 
         for (it_p = pirates->begin(); it_p != pirates->end(); it_p++){
             s_ship = dynamic_cast<Ships::Security_ship *>(it_p->info.ship);
             for (it_c = convoy->begin(); it_c != convoy->end(); it_c ++){
-                s_ship->shoot(it_p->info.cur_place, it_c->info.cur_place);
+                damage = s_ship->shoot(it_p->info.cur_place, it_c->info.cur_place);
+                it_c->info.ship->get_damage(damage);
                 s_ship->change_status();
             }
         }
     }
 
-    void Mission::convoy_shoot(std::vector<std::string> &convoy_ship, std::string pirate) {
+    void Mission::convoy_shoot(std::string pirate) {
         Ships::Security_ship *s_ship = nullptr;
         Pattern::Table<std::string, Info> :: Iterator it_p, it_c;
+        double damage = 0;
 
         it_p = pirates->find(pirate);
 
-        for (int i = 0; i < convoy_ship.size(); i ++) {
-            it_c = convoy->find(convoy_ship[i]);
+        for (it_c = convoy->begin(); it_c != convoy->end(); it_c ++) {
             if (it_c->info.ship->get_type() == "Security ship") {
                 s_ship = dynamic_cast<Ships::Security_ship *>(it_c->info.ship);
-                s_ship->shoot(it_c->info.cur_place, it_p->info.cur_place);
+                damage =  s_ship->shoot(it_c->info.cur_place, it_p->info.cur_place);
+                it_p->info.ship->get_damage(damage);
             }
         }
     }
 
-    void Mission::draw() {
+    void Mission::play(std::string direction, bool shoot, Basic::Coordinate pirate){
 
+        Table <std::string, Info> :: Iterator it;
+        std::string name_c, name_p;
+        std::vector<std::string> ships;
+
+        rich_base_B();
+        check_cur_life();
+        update_status();
+
+        if (shoot){
+            for (it = this->pirates->begin(); it != this->pirates->end(); it ++){
+                if (it->info.cur_place == pirate) {
+                    name_p = it->index;
+                    break;
+                }
+            }
+
+            convoy_shoot(name_p);
+        }
+
+        pirates_shoot();
+        move_pirates();
+
+        if (shoot == false)
+            move_convoy(direction);
+    }
+
+    bool Mission::end_game(){
+        bool won = false;
+        if (convoy->get_count() == 0)
+            if (get_properties("delivered cargo") >= get_properties("min cargo")) won = true;
+        return won;
+    }
+
+    void Mission::draw() {
+        Coordinate pirate_coord;
         using sf::Keyboard;
-        int x, y;
+        int x, y, x1, y1;
         x = this->get_x();
         y = this->get_y();
 
-        sf::RenderWindow window(sf::VideoMode((x +10) * 64, (y+ 10) * 64), "Convoy");
+        sf::RenderWindow window(sf::VideoMode((x) * 64, (y) * 64), "Convoy");
 
         sf::Sprite sprite;
 
@@ -579,6 +624,10 @@ namespace Menu{
         while (window.isOpen())
         {
             sf::Event event;
+
+            if (this->convoy->get_count() == 0){
+                window.close();
+            }
 
             while (window.pollEvent(event))
             {
@@ -647,6 +696,27 @@ namespace Menu{
 
             window.display();
 
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                x1 = sf::Mouse::getPosition(window).x;
+                y1 = sf::Mouse::getPosition(window).y;
+                pirate_coord.x = x1 / 64;
+                pirate_coord.y = y1 / 64;
+
+                play("left", true, pirate_coord);
+            }
+
+            else {
+
+                if (Keyboard::isKeyPressed(Keyboard::Left)) {
+                    play("left");
+                } else if (Keyboard::isKeyPressed(Keyboard::Right)) {
+                    play("right");
+                } else if (Keyboard::isKeyPressed(Keyboard::Up)) {
+                    play("up");
+                } else if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                    play("down");
+                }
+            }
         }
     }
 }

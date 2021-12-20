@@ -33,7 +33,9 @@ namespace Pattern {
             return *this;
         }
 
-        ~Info() {delete ship;}
+        ~Info() {
+            //delete ship;
+        }
 
         friend std::ostream & operator <<(std::ostream &s, const Info &inf) {
             std::cout << inf.ship << "\n" << inf.cur_place <<std::endl;
@@ -153,8 +155,7 @@ namespace Pattern {
         const INF &operator[](const IND &s) const // r-value
         {
             int i = get_pos(s);
-            if (i < 0)
-            throw "No such element";
+            if (i < 0) throw i;
             return elements[i].info;
         }
 
@@ -186,11 +187,10 @@ namespace Pattern {
         int get_count() const { return current_size; };
 
         void del_ship(const std::string &name){
-            //Table<std::string, struct Info>::Iterator it;
             int i = get_pos(name);
-            if (i < 0) throw "No such element";
+            if (i < 0) return;
             else{
-                delete &(elements[i]);
+                //delete &(elements[i]);
                 elements[i] = elements[current_size-1];
                 current_size -=1;
             }
@@ -200,8 +200,10 @@ namespace Pattern {
             typedef Table_element<std::string, struct Info>  Tab_elem;
             const std::string &name = new_ship->get_name();
 
-            Info *new_info = new Info {new_ship, coordinates}; //
-            Tab_elem *new_elem = new Tab_elem(new_ship->get_name(), *new_info);//
+            //Info *new_info = new Info {new_ship, coordinates}; //
+           // Tab_elem *new_elem = new Tab_elem(new_ship->get_name(), *new_info);//
+           Info new_info(new_ship, coordinates);
+           Tab_elem new_elem(new_ship->get_name(), new_info);
 
             if (current_size == max_size) {
                 max_size += QUOTA;
@@ -210,7 +212,7 @@ namespace Pattern {
                 for (int i = 0; i < current_size; i ++) elements[i] = old[i];
                 delete [] old;
             }
-            elements[current_size] = *new_elem;
+            elements[current_size] = new_elem;
             current_size += 1;
         }
 

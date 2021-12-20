@@ -48,14 +48,25 @@ int main() {
     mission.buy_ship(0, c2->get_name());
     mission.buy_ship(0, d->get_name());
     mission.buy_ship(0, b->get_name());
-    mission.change_name_ship(0, st4, "AAAA");
+    mission.change_name_ship(0, st4, "A");
 
 
     mission.buy_ship(1, c->get_name());
+    mission.change_name_ship(1, st, "Pirate 1");
+
     mission.buy_ship(1, c2->get_name());
+    mission.change_name_ship(1, st1, "Pirate 2");
+
     mission.buy_ship(1, c->get_name());
+    mission.change_name_ship(1, st, "Pirate 3");
+
     mission.buy_ship(1, c2->get_name());
-    mission.buy_armament(1, st, "stern", "rocket");
+    mission.change_name_ship(1, st1, "Pirate 4");
+
+    mission.buy_armament(1, "Pirate 1", "stern", "rocket");
+    mission.buy_armament(1, "Pirate 2", "stern", "rocket");
+    mission.buy_armament(1, "Pirate 3", "stern", "rocket");
+    mission.buy_armament(1, "Pirate 4", "stern", "rocket");
 
     mission.add_pirates_coordinate(34, 25);
     mission.add_pirates_coordinate(25, 6);

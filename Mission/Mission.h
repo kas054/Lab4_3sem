@@ -107,10 +107,13 @@ namespace Menu {
 
         void pirates_shoot();
 
-        void convoy_shoot(std::vector<std::string> &convoy_ship, std::string pirate);
+        void convoy_shoot(std::string pirate);
 
         void draw();
 
+        void play(std::string direction, bool shoot = false, Basic::Coordinate pirate = {0,0});
+
+        bool end_game();
 
     };
 

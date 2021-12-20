@@ -43,6 +43,9 @@ namespace Basic {
     struct Coordinate{
         double x;
         double y;
+        bool operator == (Basic::Coordinate c){
+            return (x == c.x && y == c.y);
+        }
     };
 
     struct Capitan{
