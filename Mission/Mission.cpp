@@ -200,12 +200,16 @@ namespace Menu{
     void Mission::add_cargo(std::string name, int weight){
         Table <std::string, Info> :: Iterator it;
         Ships::Transport_ship *cur_ship;
+        std::string cur_velocity = "cur velocity", max_velocity = "max velocity";
 
         it = convoy->find(name);
         if (it == convoy->end()) throw "No such ship";
 
         cur_ship = dynamic_cast<Ships::Transport_ship *>((*it).info.ship);
 
+        cur_ship->set_max_cargo(300);
+        cur_ship->set_coef_decrease(1.5);
+        cur_ship->change_property(cur_velocity, cur_ship->get_property(max_velocity));
         // max_cargo >= cur_cargo + weight
         if (cur_ship->get_info_cargo(0) >= cur_ship->get_info_cargo(1) + weight) {
             cur_ship->set_cur_cargo(weight);
@@ -431,7 +435,6 @@ namespace Menu{
             velocity = it->info.ship->get_property("cur velocity");
             tmp_coord = it->info.cur_place;
             change_coord(0, it->index, tmp_coord.x + change_x * velocity, tmp_coord.y + change_y * velocity);
-            tmp_coord = it->info.cur_place;
         }
     }
 
@@ -504,13 +507,16 @@ namespace Menu{
         Basic::Coordinate &coord = coordinates_B;
         double size = get_properties("size B"), cargo = 0;
         Pattern::Table<std::string, Info> :: Iterator it;
+        const std::string transport_ship = "Transport_ship", m_t_ship = "M_T_ship";
 
         for (it = convoy->begin(); it != convoy->end(); it ++){
+
+            if (it->index == "") break;
 
             if (it->info.cur_place.x >= coord.x - size && it->info.cur_place.x <= coord.x + size)
                 if (it->info.cur_place.y >= coord.y - size && it->info.cur_place.y <= coord.y + size) { // корабль находится на базе В
 
-                    if (it->info.ship->get_type() == "Transport ship" || it->info.ship->get_type() == "M_T ship"){ // на корабле есть груз
+                    if (it->info.ship->get_type() == transport_ship || it->info.ship->get_type() == m_t_ship){ // на корабле есть груз
                         t_ship = dynamic_cast<Ships::Transport_ship *>(it->info.ship);
                         cargo = t_ship->get_info_cargo(1); // current cargo
                         set_properties("delivered cargo",cargo);
@@ -580,10 +586,10 @@ namespace Menu{
     }
 
     bool Mission::end_game(){
-        bool won = false;
+        bool win = false;
         if (convoy->get_count() == 0)
-            if (get_properties("delivered cargo") >= get_properties("min cargo")) won = true;
-        return won;
+            if (get_properties("delivered cargo") >= get_properties("min cargo")) win = true;
+        return win;
     }
 
     void Mission::draw() {
@@ -597,8 +603,9 @@ namespace Menu{
 
         sf::Sprite sprite;
 
-        sf::Image water_image, base_c_imagine, pirates_imagine, convoy_imagine, base_p_imagine, transport_imagine;
+        sf::Image water_image, base_c_imagine, pirates_imagine, convoy_imagine, base_p_imagine, transport_imagine, win_image;
 
+        win_image.loadFromFile("../Mission/Imagine/win.png");
         water_image.loadFromFile("../Mission/Imagine/water.png");
         base_c_imagine.loadFromFile("../Mission/Imagine/Base_convoy.png");
         base_p_imagine.loadFromFile("../Mission/Imagine/base_b.png");
@@ -607,13 +614,14 @@ namespace Menu{
         transport_imagine.loadFromFile("../Mission/Imagine/transport2.png");
 
 
-        sf::Texture water_texture;
+        sf::Texture water_texture, win_texture;
         sf::Texture base_c_texture;
         sf::Texture base_p_texture;
         sf::Texture pirates_texture;
         sf::Texture convoy_texture;
         sf::Texture transport_texture;
 
+        win_texture.loadFromImage(win_image);
         water_texture.loadFromImage(water_image);
         base_c_texture.loadFromImage(base_c_imagine);
         base_p_texture.loadFromImage(base_p_imagine);
@@ -625,10 +633,6 @@ namespace Menu{
         {
             sf::Event event;
 
-            if (this->convoy->get_count() == 0){
-                window.close();
-            }
-
             while (window.pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
@@ -636,6 +640,19 @@ namespace Menu{
             }
 
             window.clear();
+
+
+            if (this->convoy->get_count() == 0){
+                if (convoy->get_count() == 0){
+                    if (end_game()){
+                        sprite.setTexture(win_texture);
+                        sprite.setPosition(0, 0);
+                        window.draw(sprite);
+                    }
+                }
+                window.display();
+                break;
+            }
 
             for (int i = 0; i < x; i ++){
                 for (int j = 0; j < y; j ++){

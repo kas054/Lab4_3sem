@@ -41,14 +41,18 @@ int main() {
     mission.set_properties("max count pirates", 100);
     mission.set_properties("size A", 5);
     mission.set_properties("size B", 3);
+    mission.set_properties("full cargo", 300);
+    mission.set_properties("min cargo", 30);
+    mission.set_properties("cur cargo", 300);
     mission.set_coord_A_B(0, 4, 5);
     mission.set_coord_A_B(1, 30, 20);
 
+    mission.buy_ship(0, b->get_name());
     mission.buy_ship(0, c->get_name());
     mission.buy_ship(0, c2->get_name());
     mission.buy_ship(0, d->get_name());
-    mission.buy_ship(0, b->get_name());
     mission.change_name_ship(0, st4, "A");
+    mission.add_cargo("A", 300);
 
 
     mission.buy_ship(1, c->get_name());
