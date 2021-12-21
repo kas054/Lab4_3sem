@@ -740,7 +740,7 @@ namespace Menu{
             {
                 window.clear();
 
-                if (end_game() != true)
+                if (end_game())
                     window.draw(win);
                 else
                     window.draw(lose);
