@@ -519,7 +519,7 @@ namespace Menu{
                     if (it->info.ship->get_type() == transport_ship || it->info.ship->get_type() == m_t_ship){ // на корабле есть груз
                         t_ship = dynamic_cast<Ships::Transport_ship *>(it->info.ship);
                         cargo = t_ship->get_info_cargo(1); // current cargo
-                        set_properties("delivered cargo",cargo);
+                        set_properties("delivered cargo",cargo + get_properties("delivered cargo"));
                     }
                     lose_ship(0,it->index);
                 }
@@ -588,7 +588,8 @@ namespace Menu{
     bool Mission::end_game(){
         bool win = false;
         if (convoy->get_count() == 0)
-            if (get_properties("delivered cargo") >= get_properties("min cargo")) win = true;
+            if (get_properties("delivered cargo") >= get_properties("min cargo"))
+                win = true;
         return win;
     }
 
@@ -601,10 +602,11 @@ namespace Menu{
 
         sf::RenderWindow window(sf::VideoMode((x) * 64, (y) * 64), "Convoy");
 
-        sf::Sprite sprite;
+        sf::Sprite sprite, win, lose;
 
-        sf::Image water_image, base_c_imagine, pirates_imagine, convoy_imagine, base_p_imagine, transport_imagine, win_image;
+        sf::Image water_image, base_c_imagine, pirates_imagine, convoy_imagine, base_p_imagine, transport_imagine, win_image, lose_image;
 
+        lose_image.loadFromFile("../Mission/Imagine/lose.png");
         win_image.loadFromFile("../Mission/Imagine/win.png");
         water_image.loadFromFile("../Mission/Imagine/water.png");
         base_c_imagine.loadFromFile("../Mission/Imagine/Base_convoy.png");
@@ -614,13 +616,14 @@ namespace Menu{
         transport_imagine.loadFromFile("../Mission/Imagine/transport2.png");
 
 
-        sf::Texture water_texture, win_texture;
+        sf::Texture water_texture, win_texture, lose_texture;
         sf::Texture base_c_texture;
         sf::Texture base_p_texture;
         sf::Texture pirates_texture;
         sf::Texture convoy_texture;
         sf::Texture transport_texture;
 
+        lose_texture.loadFromImage(lose_image);
         win_texture.loadFromImage(win_image);
         water_texture.loadFromImage(water_image);
         base_c_texture.loadFromImage(base_c_imagine);
@@ -628,6 +631,12 @@ namespace Menu{
         pirates_texture.loadFromImage(pirates_imagine);
         convoy_texture.loadFromImage(convoy_imagine);
         transport_texture.loadFromImage(transport_imagine);
+
+        win.setTexture(win_texture);
+        lose.setTexture(lose_texture);
+
+        win.setPosition(24 * get_x(), 14 * get_y());
+        lose.setPosition(28 * get_x(), 14 * get_y());
 
         while (window.isOpen())
         {
@@ -641,98 +650,101 @@ namespace Menu{
 
             window.clear();
 
+            if (this->convoy->get_count() != 0)
+            {
 
-            if (this->convoy->get_count() == 0){
-                if (convoy->get_count() == 0){
-                    if (end_game()){
-                        sprite.setTexture(win_texture);
-                        sprite.setPosition(0, 0);
+                for (int i = 0; i < x; i++) {
+                    for (int j = 0; j < y; j++) {
+                        sprite.setTexture(water_texture);
+                        sprite.setPosition(j * 64, i * 64);
                         window.draw(sprite);
                     }
                 }
+
+                std::vector<Basic::Coordinate>::iterator base_pirates;
+
+                // Базы пиратов
+                for (base_pirates = coordinates_pirates.begin();
+                     base_pirates != coordinates_pirates.end(); base_pirates++) {
+                    sprite.setTexture(base_p_texture);
+                    sprite.setPosition(base_pirates->x * 64, base_pirates->y * 64);
+                    window.draw(sprite);
+                }
+
+                // База конвоя А
+                for (int i = 0; i < get_properties("size A"); i++) {
+                    for (int j = 0; j < get_properties("size A"); j++) {
+                        sprite.setTexture(base_c_texture);
+                        sprite.setPosition((get_coord_A_B(0)->x + i) * 64, (get_coord_A_B(0)->y + j) * 64);
+                        window.draw(sprite);
+                    }
+                }
+
+                // База конвоя B
+                for (int i = 0; i < get_properties("size B"); i++) {
+                    for (int j = 0; j < get_properties("size B"); j++) {
+                        sprite.setTexture(base_c_texture);
+                        sprite.setPosition((get_coord_A_B(1)->x + i) * 64, (get_coord_A_B(1)->y + j) * 64);
+                        window.draw(sprite);
+                    }
+                }
+
+
+                Table<std::string, Info>::Iterator it;
+
+                // Корабли конвоя
+                for (it = convoy->begin(); it != convoy->end(); it++) {
+                    if (it->info.ship->get_type() == "M_T_ship" || it->info.ship->get_type() == "Security_ship") {
+                        sprite.setTexture(convoy_texture);
+                    } else if (it->info.ship->get_type() == "Transport_ship") {
+                        sprite.setTexture(transport_texture);
+                    }
+                    sprite.setPosition(it->info.cur_place.x * 64, it->info.cur_place.y * 64);
+                    window.draw(sprite);
+                }
+
+                // Корабли пиратов
+                for (it = pirates->begin(); it != pirates->end(); it++) {
+                    sprite.setTexture(pirates_texture);
+                    sprite.setPosition(it->info.cur_place.x * 64, it->info.cur_place.y * 64);
+                    window.draw(sprite);
+                }
+
                 window.display();
-                break;
-            }
 
-            for (int i = 0; i < x; i ++){
-                for (int j = 0; j < y; j ++){
-                    sprite.setTexture(water_texture);
-                    sprite.setPosition(j * 64, i * 64);
-                    window.draw(sprite);
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                {
+                    x1 = sf::Mouse::getPosition(window).x;
+                    y1 = sf::Mouse::getPosition(window).y;
+                    pirate_coord.x = x1 / 64;
+                    pirate_coord.y = y1 / 64;
+
+                    play("left", true, pirate_coord);
+                }
+                else
+                {
+
+                    if (Keyboard::isKeyPressed(Keyboard::Left)) {
+                        play("left");
+                    } else if (Keyboard::isKeyPressed(Keyboard::Right)) {
+                        play("right");
+                    } else if (Keyboard::isKeyPressed(Keyboard::Up)) {
+                        play("up");
+                    } else if (Keyboard::isKeyPressed(Keyboard::Down)) {
+                        play("down");
+                    }
                 }
             }
 
-            std::vector<Basic::Coordinate> :: iterator base_pirates;
+            else
+            {
+                window.clear();
 
-            // Базы пиратов
-            for (base_pirates = coordinates_pirates.begin(); base_pirates != coordinates_pirates.end(); base_pirates ++) {
-                sprite.setTexture(base_p_texture);
-                sprite.setPosition(base_pirates->x * 64, base_pirates->y * 64);
-                window.draw(sprite);
-            }
-
-            // База конвоя А
-            for (int i = 0; i < get_properties("size A"); i ++){
-                for (int j = 0; j < get_properties("size A"); j ++){
-                    sprite.setTexture(base_c_texture);
-                    sprite.setPosition((get_coord_A_B(0)->x + i) * 64, (get_coord_A_B(0)->y + j)* 64);
-                    window.draw(sprite);
-                }
-            }
-
-            // База конвоя B
-            for (int i = 0; i < get_properties("size B"); i ++){
-                for (int j = 0; j < get_properties("size B"); j ++){
-                    sprite.setTexture(base_c_texture);
-                    sprite.setPosition((get_coord_A_B(1)->x + i) * 64, (get_coord_A_B(1)->y + j)* 64);
-                    window.draw(sprite);
-                }
-            }
-
-
-            Table <std::string, Info> :: Iterator it;
-
-            // Корабли конвоя
-            for (it = convoy->begin(); it != convoy->end(); it ++){
-                if (it->info.ship->get_type() == "M_T_ship" || it->info.ship->get_type() == "Security_ship"){
-                    sprite.setTexture(convoy_texture);
-                }
-                else if (it->info.ship->get_type() == "Transport_ship"){
-                    sprite.setTexture(transport_texture);
-                }
-                sprite.setPosition(it->info.cur_place.x * 64, it->info.cur_place.y * 64);
-                window.draw(sprite);
-            }
-
-            // Корабли пиратов
-            for (it = pirates->begin(); it != pirates->end(); it ++){
-                sprite.setTexture(pirates_texture);
-                sprite.setPosition(it->info.cur_place.x * 64, it->info.cur_place.y * 64);
-                window.draw(sprite);
-            }
-
-            window.display();
-
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                x1 = sf::Mouse::getPosition(window).x;
-                y1 = sf::Mouse::getPosition(window).y;
-                pirate_coord.x = x1 / 64;
-                pirate_coord.y = y1 / 64;
-
-                play("left", true, pirate_coord);
-            }
-
-            else {
-
-                if (Keyboard::isKeyPressed(Keyboard::Left)) {
-                    play("left");
-                } else if (Keyboard::isKeyPressed(Keyboard::Right)) {
-                    play("right");
-                } else if (Keyboard::isKeyPressed(Keyboard::Up)) {
-                    play("up");
-                } else if (Keyboard::isKeyPressed(Keyboard::Down)) {
-                    play("down");
-                }
+                if (end_game() != true)
+                    window.draw(win);
+                else
+                    window.draw(lose);
+                window.display();
             }
         }
     }
